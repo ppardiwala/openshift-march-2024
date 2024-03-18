@@ -176,7 +176,35 @@
 ## Info - maxiumum pods that can run in a single node
 - https://kubernetes.io/docs/setup/best-practices/cluster-large/#:~:text=More%20specifically%2C%20Kubernetes%20is%20designed,more%20than%20150%2C000%20total%20pods
 - 110 pods can run in a single node
-- 
+
+## Info - Commonly used Openshift Resources
+
+- Pod
+  - is a collection of related containers
+  - In OpenShift/Kubernetes IP address is assigned on the Pod level not on the container level
+  - each Pod represents one application instance
+ 
+- ReplicaSet
+  - this tells how many instances of a Pod is supposed to be running at any point of time
+  - Desired count of Pods
+  - Actual count of Pods
+  - How many Pods are in ready state
+  - How many running but not ready
+  - is a configuration object (JSON/YAML) record stored in etcd data base
+  - this resource is managed by ReplicaSet Controller
+  - supports scale up/down ( ie adding more instances or your application or removing unwanted pod instances )
+
+- Deployment
+  - this tells what is the name of our application
+  - represents the application
+  - what is Container Image that must be used to deploy the Pods
+  - How many instance of the Pods are supposed to created
+  - is a configuration object (JSON/YAML) record stored in etcd data base
+  - this resource is managed by Deployment Controller
+  - supports rolling update
+
+Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, ReplicaSet and Pods are automatically created.
+
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
 oc get nodes
