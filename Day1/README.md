@@ -570,3 +570,36 @@ No resources found in jegan namespace.
 Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
 No resources found in jegan namespace.  
 </pre>
+
+## Lab - Deploying nginx using bitnami/nginx
+```
+oc create deploy nginx --image=bitnami/nginx:latest --replicas=3
+oc get deploy,rs,po
+oc get po -w
+```
+
+Expected output ( to come out of the oc get po -w watch mode, press Ctrl + C )
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc create deploy nginx --image=bitnami/nginx:latest --replicas=3
+deployment.apps/nginx created
+[jegan@tektutor.org openshift-march-2024]$ oc get deploy,rs,po
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   0/3     3            0           6s
+
+NAME                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-bb865dc5f   3         3         0       6s
+
+NAME                        READY   STATUS              RESTARTS   AGE
+pod/nginx-bb865dc5f-225lb   0/1     ContainerCreating   0          6s
+pod/nginx-bb865dc5f-hm8tl   0/1     ContainerCreating   0          6s
+pod/nginx-bb865dc5f-q5xkf   0/1     ContainerCreating   0          6s
+[jegan@tektutor.org openshift-march-2024]$ oc get po -w
+NAME                    READY   STATUS              RESTARTS   AGE
+nginx-bb865dc5f-225lb   0/1     ContainerCreating   0          11s
+nginx-bb865dc5f-hm8tl   0/1     ContainerCreating   0          11s
+nginx-bb865dc5f-q5xkf   0/1     ContainerCreating   0          11s
+nginx-bb865dc5f-225lb   1/1     Running             0          14s
+nginx-bb865dc5f-hm8tl   1/1     Running             0          16s
+nginx-bb865dc5f-q5xkf   1/1     Running             0          17s
+^C[jegan@tektutor.org openshift-march-2024]$   
+</pre>
