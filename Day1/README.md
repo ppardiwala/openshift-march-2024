@@ -484,6 +484,7 @@ nginx-7bf8c77b5b-mmvqf   0/1     CrashLoopBackOff   7 (66s ago)   12m
 
 Debugging the Pod crash
 ```
+oc logs nginx-7bf8c77b5b-mmvqf
 ```
 
 Expected output
