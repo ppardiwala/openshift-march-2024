@@ -205,6 +205,26 @@
 
 Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, ReplicaSet and Pods are automatically created.
 
+## Info - About our Openshift Lab setup
+- Production grade
+- System Configuration
+  - 48 virtual cores
+  - 755 GB RAM
+  - 17 TB HDD Storage
+- CentOS 7.9.2009 64-bit OS
+- KVM Hypervisor
+- 7 Virtual machines
+  - Master 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Master 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Master 3 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Worker 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Worker 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - HAProxy Load Balancer Virtual Machine
+  - One more VM created/destroyed during Openshift installation
+- OS1 ( 10.10.15.107 ) - Openshift cluster 1 ( 9 participants - user01 thru user09 )
+- OS2 ( 10.10.15.106 ) - Openshift cluster 2 ( 8 participants - user10 thru user17 )
+- OS3 ( 10.10.15.105 ) - openshift cluster 3 ( 8 participants - user18 thru user25 )
+
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
 oc get nodes
