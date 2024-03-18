@@ -237,6 +237,12 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 - the ignition files have to kept in a load balancer that the RHCOS machine can access
 - only thru the remote ignition files the RHCOS can be booted
 
+## Imperative vs Declarative
+- Openshift supports both imperative and declarative style to manage applications
+- imperative style involves just commands to deploy,undeploy, scale up/down, rolling update etc
+- declarative styles requires writing manifest files(yaml/json) files, ie converting everything into source code which can be pushed to version control like GitHub, BitBucket, GitLab, etc.,
+- Declarative style is recommended over the imperative style
+
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
 oc get nodes
