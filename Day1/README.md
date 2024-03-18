@@ -245,6 +245,26 @@ Expected output
 oc get nodes
 oc describe node master-1.ocp.tektutor.org.labs
 ```
-
 Expected output
 ![nodets](2.png)
+
+## Lab - Create an openshift project
+
+In the below command, replace 'jegan' with your name.
+```
+oc new-project jegan
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc new-project jegan
+Now using project "jegan" on server "https://api.ocp.tektutor.org.labs:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname  
+</pre>
