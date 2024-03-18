@@ -83,6 +83,8 @@
 - AWS offers managed EKS - Elastic Kubernetes Service, you can get support from Amazon
 - Azure offers managed AKS - Azure Kubernetes Service, you can get support from Microsoft
 - Kuberetes supports Operators and Custom Resource Definitions to extend the functionality of Kubernetes
+- this is CLI only, no webconsole
+- Kubernetes supports deploying applications only as Container Images not from source code directly
 
 ## What is OpenShift?
 - it is an Orchestration platfrom from Red Hat
@@ -91,3 +93,7 @@
 - OpenShift using Kubernetes Operators( ie Custom Resources and Customer Operators ) has added many additional features on top of Kubernetes
 - You will get support from Red Hat
 - It is a licensed product
+- it is a superset of Google Kubernetes
+- This supports Command-line and Web-console
+- Openshift also support CI/CD
+- OpenShift is capable of building an application from source code and deploy that as containized workloads within OpenShift
