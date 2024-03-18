@@ -633,3 +633,63 @@ nginx-bb865dc5f-225lb   1/1     Running   0          14m   10.128.0.224   master
 nginx-bb865dc5f-g6p6t   1/1     Running   0          97s   10.131.0.8     worker-2.ocp.tektutor.org.labs   <none>           <none>
 nginx-bb865dc5f-q5xkf   1/1     Running   0          14m   10.128.2.38    worker-1.ocp.tektutor.org.labs   <none>           <none> 
 </pre>
+
+## Lab - About kubeconfig file
+- oc and kubectl client tool depends on a config file to connect to the Kubernetes/Openshift cluster
+- normally this file is kept under user home .kube hidden folder, the file name is config with no extension
+- but you could also pass the --kubeconfig switch to point to a config file kept in any directory
+- you could also use an environment variable KUBECONFIG to point to the directory and the config file oc/kubectl must be using
+
+```
+[jegan@tektutor.org openshift-march-2024]$ mv ~/.kube/config ~/.kube/config1
+[jegan@tektutor.org openshift-march-2024]$ oc get nodes
+error: Missing or incomplete configuration info.  Please point to an existing, complete config file:
+
+
+  1. Via the command-line flag --kubeconfig
+  2. Via the KUBECONFIG environment variable
+  3. In your home directory as ~/.kube/config
+
+To view or setup config directly use the 'config' command.
+[jegan@tektutor.org openshift-march-2024]$ oc get nodes --kubeconfig=~/.kube/config1
+error: stat ~/.kube/config1: no such file or directory
+[jegan@tektutor.org openshift-march-2024]$ oc get nodes --kubeconfig ~/.kube/config1
+NAME                             STATUS   ROLES                         AGE   VERSION
+master-1.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+master-2.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+master-3.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+worker-1.ocp.tektutor.org.labs   Ready    worker                        8h    v1.27.6+f67aeb3
+worker-2.ocp.tektutor.org.labs   Ready    worker                        8h    v1.27.6+f67aeb3
+[jegan@tektutor.org openshift-march-2024]$ export KUBECONFIG=~/.kube/config1
+[jegan@tektutor.org openshift-march-2024]$ oc get nodes
+NAME                             STATUS   ROLES                         AGE   VERSION
+master-1.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+master-2.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+master-3.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+worker-1.ocp.tektutor.org.labs   Ready    worker                        8h    v1.27.6+f67aeb3
+worker-2.ocp.tektutor.org.labs   Ready    worker                        8h    v1.27.6+f67aeb3
+[jegan@tektutor.org openshift-march-2024]$ mv ~/.kube/config1 ~/.kube/config
+[jegan@tektutor.org openshift-march-2024]$ oc get nodes
+W0318 16:39:57.857915 2847206 loader.go:222] Config not found: /home/jegan/.kube/config1
+error: Missing or incomplete configuration info.  Please point to an existing, complete config file:
+
+
+  1. Via the command-line flag --kubeconfig
+  2. Via the KUBECONFIG environment variable
+  3. In your home directory as ~/.kube/config
+
+To view or setup config directly use the 'config' command.
+
+[jegan@tektutor.org openshift-march-2024]$ export KUBECONFIG=""
+[jegan@tektutor.org openshift-march-2024]$ oc get nodes
+NAME                             STATUS   ROLES                         AGE   VERSION
+master-1.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+master-2.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+master-3.ocp.tektutor.org.labs   Ready    control-plane,master,worker   9h    v1.27.6+f67aeb3
+worker-1.ocp.tektutor.org.labs   Ready    worker                        8h    v1.27.6+f67aeb3
+worker-2.ocp.tektutor.org.labs   Ready    worker                        8h    v1.27.6+f67aeb3
+[jegan@tektutor.org openshift-march-2024]$ ls -l ~/.kube
+total 28
+drwxr-x---. 4 jegan jegan    35 Feb 19 13:14 cache
+-rw-r-----. 1 jegan jegan 24809 Mar 18 15:06 config
+```
