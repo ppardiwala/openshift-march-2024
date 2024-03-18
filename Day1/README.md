@@ -16,6 +16,14 @@
   - 
 - docker container
   - it is an application process that runs in a separate unix namespace
+  - though it looks like a virtual machine or a OS, it is technically just an application process
+  - containers gets its own network stack, it own file system
+  - containers also support package manager ( apt, yum, rpm, linux tools )
+  - containers will never be able to replace an Operating System or Virtual machines
+  - containers don't have their own OS Kernel
+  - container represent a single application
+  - containers running on the same system/os shares the Hardwares resources available on the OS they are running
+  - containers will depend on the OS Kernel on which they are running
 
 ## Linux Kernel Container Features
 - Namespace
