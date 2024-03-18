@@ -1,7 +1,18 @@
 # Day 1
 
-## Kindly login to your RPS Lab Machine ( I'll be on mute until you all complete the pre-test )
-- Kindly complete the pre-test and notify me
-- while registering for the pre-test, use your personal email-id (avoid using BOFA id)
-- Those who don't have chat access, you may tell me directly regarding test completion
-- Once everyone confirms the test completion, we can start the training
+## Docker Overview
+- comes in 2 flavors
+  - Community Edition - Docker CE
+  - Enterpise Edition - Docker EE
+- written in Go language
+- Developed and maintained by an organization called Docker Inc
+- Client/Server architecture
+- Client tool - docker
+- Server tool - runs a service in Linux/Windows/Mac
+- Registries
+  - this is where all docker images are cached
+- Docker Image
+  - is a blueprint of Docker container
+  - 
+- docker container
+  - it is an application process that runs in a separate unix namespace
