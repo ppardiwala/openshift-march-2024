@@ -112,6 +112,16 @@
   - worker nodes
     - this is where normally the user application instances will be running
 
+## What is an OpenShift Node?
+- can be physical server, virtual machine with RedHat Enterprise Linux or RedHat Enterprise Linux Core OS
+- can be aws ec2 instance, azure virtual machine
+- it is a virtual machine in public/private/hybrid cloude
+- it is a on-prem server
+- master nodes are allowed to have only Red Hat Enterprise Linux Core OS (RHELCOS)
+- worker nodes are allowed to choose between
+  - Red Hat Enterprise Linux (RHEL)
+  - Red Hat Enterprise Linux Core OS (RHCOS)
+
 # Control Plane components
 ## API Server
 - this is a Pod that runs in all the master nodes
@@ -159,6 +169,14 @@
   - this helps in Service discovery
     i.e resolving the Ip address of a service by its name
 
+## Info - OpenShift client tools
+- oc
+- kubectl
+
+## Info - maxiumum pods that can run in a single node
+- https://kubernetes.io/docs/setup/best-practices/cluster-large/#:~:text=More%20specifically%2C%20Kubernetes%20is%20designed,more%20than%20150%2C000%20total%20pods
+- 110 pods can run in a single node
+- 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
 oc get nodes
