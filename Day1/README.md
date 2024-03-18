@@ -52,6 +52,8 @@
 
 ## What is Container Orchestration Platform?
 - manages the containerized application workloads
+- has one or more servers ( cluster )
+- 
 - most popular features that are supported by any Container Orchestration Platform
   - high availability to your applications that runs with Container Orchestration Platforms
   - it also supports in-built load-balancing, monitoring features to heal/repair your non-responding applications, etc.,
@@ -59,3 +61,4 @@
   - rolling update
     - you can upgrade/downgrade your already alive application from one version to other without any downtime
     - rolling back to older version of an application is also possible
+
