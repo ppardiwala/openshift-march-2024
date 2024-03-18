@@ -111,7 +111,33 @@
    - control planes only runs in master node
   - worker nodes
     - this is where normally the user application instances will be running
-      
+
+## API Server
+- this is a Pod that runs in all the master nodes
+- API Servers supports REST APIs for every OpenShift functionality
+- OpenShift client tools like oc or kubectl will be interacting with API Server to get things done
+- All the other components within OpenShift are allocated to interact only with API Server
+- API Server is the only component that interacts or uses etcd data store 
+
+## etcd 
+- this is key-value data store
+- opensource database, which can be used in normal applications that runs within Kubernetes/Openshift or outside them
+- this is where OpenShift stores cluster details, application deployed, pretty much every data about the openshift cluster and application status are stored here
+- each time a new record is created, or an existing record is updated/deleted, API Server will notify via an event
+  
+## Scheduler
+- is the component which is responsible to identify an healthy node to run new application instances
+- the schedulation recommendation it sends to API Servers via a REST call
+
+## Controller Managers
+- it is a collection of many controllers
+- there are multiple controllers in Kubernetes/OpenShift
+- Controllers are the one which supports monitoring featurew within Kuberenetes/OpenShift
+- Examples
+  - Deployment Controller that manages Deployment resource
+  - ReplicaSet Controller that manages ReplicaSet resource
+  - DaemonSet Controller that manages DaemonSet
+  - StatefulSet Controller that manages StatefulSet
 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
