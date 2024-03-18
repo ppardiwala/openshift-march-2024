@@ -117,7 +117,7 @@
 - can be aws ec2 instance, azure virtual machine
 - it is a virtual machine in public/private/hybrid cloude
 - it is a on-prem server
-- master nodes are allowed to have only Red Hat Enterprise Linux Core OS (RHELCOS)
+- master nodes are allowed to have only Red Hat Enterprise Linux Core OS (RHCOS)
 - worker nodes are allowed to choose between
   - Red Hat Enterprise Linux (RHEL)
   - Red Hat Enterprise Linux Core OS (RHCOS)
