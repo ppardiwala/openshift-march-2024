@@ -361,3 +361,18 @@ openshift-service-ca-operator                                     Active
 openshift-user-workload-monitoring                                Active
 openshift-vsphere-infra                                           Active  
 </pre>
+
+## Lab - Switching to a specific project
+```
+oc project jegan
+oc project default
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc project jegan
+Now using project "jegan" on server "https://api.ocp.tektutor.org.labs:6443".
+  
+[jegan@tektutor.org openshift-march-2024]$ oc project default
+Now using project "default" on server "https://api.ocp.tektutor.org.labs:6443".  
+</pre>
