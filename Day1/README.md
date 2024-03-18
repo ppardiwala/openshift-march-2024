@@ -97,6 +97,21 @@
 - This supports Command-line and Web-console
 - Openshift also support CI/CD
 - OpenShift is capable of building an application from source code and deploy that as containized workloads within OpenShift
+- nodes can be a physical server with either RedHat Enterprise Linux installed on RedHat Enterprise Linux Core OS
+
+- supports two types of nodes
+  - master nodes
+    - this is where Control plane components will be running
+    - normally no user-applications will run in these types of nodes, but we can configure the master node to run user-applications if required
+    - Control Plane
+      - API Server
+      - etcd data store
+      - scheduler
+      - controller managers ( this is collection of many controllers )
+   - control planes only runs in master node
+  - worker nodes
+    - this is where normally the user application instances will be running
+      
 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
