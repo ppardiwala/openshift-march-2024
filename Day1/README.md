@@ -734,3 +734,25 @@ The below things happens
   - Infra Container ( this supplies network - IP address )
   - application continer ( Infra container network is shared by the application container )
 ```
+
+Creating a Pod using Docker
+```
+docker run -d --name nginx-pause-container --hostname nginx gcr.io/google-containers/pause-amd64:3.2
+docker run -d --name nginx --network=container:nginx-pause-container nginx:latest
+```
+
+Now find the IP address of the nginx-pause-container
+```
+docker inspect nginx-pause-container | grep IPA
+```
+
+Now get inside the nginx container shell
+```
+docker exec -it nginx sh
+hostname -i
+exit
+```
+
+Now you may notice that the IP address of nginx-pause-container and nginx container is one and the same as they both are sharing the network stack.
+
+This is how Pods are created in Kubernetes and Openshift.
