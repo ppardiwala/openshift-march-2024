@@ -693,3 +693,35 @@ total 28
 drwxr-x---. 4 jegan jegan    35 Feb 19 13:14 cache
 -rw-r-----. 1 jegan jegan 24809 Mar 18 15:06 config
 ```
+
+## Lab - What happens within the OpenShift cluster when we use oc create deployment command
+When we issue the below command
+```
+oc create deploy nginx --image=bitnami/nginx:latest --replicas=3
+```
+
+The below things happens 
+```
+- oc client tool will make a REST API call to API Server requesting the API Server to create a new deployment with name nginx using the container image bitnami/nginx, and it will also mention the number of pods to be 3.
+- The API Server receives the request, it then creates a new deployment record in the etcd database.
+- The API Server then broadcasts an event saying a New Deployment is created.
+- The Deployment Controller receives the event, it then reads the info
+  - name of the deployment
+  - container image
+  - number of Pods to be created
+- The deployment Controller, sends a REST call to API Server request it to create a new ReplicaSet for the nginx deployment with desired count as 3 and the container image bitnami/nginx:latest
+- The API Server receives this request and it creates a ReplicaSet record (database entry) in the etcd database.
+- The API Server then broadcasts an event saying a New ReplicaSet is created.
+- The ReplicaSet Controller receives the event, it then reads the below info
+  - no of pods
+  - container image to be used
+- The ReplicaSet Controller sends a REST call to API Server requesting it to create 3 Pods with container image bitnami/nginx:latest
+- The API Server receives the request, it then creates 3 Pod database entries/records in the etcd database.
+- The API Servers then broadcasts 3 events saying New Pod created
+- The Scheduler receives the New Pod created event, it then identifies healthy nodes where those Pods can be scheduled
+- The Scheduler sends it scheduling recommendation to the API Server via REST call
+- The scheduling recommendatations are updated in the etcd Pod records by the API Server
+- The API Server then broadcasts events something like Pod scheduled
+- The kubelet container agent running on respective nodes receives the event, it then pull the container image from respective container registry, creates the containers for the Pods, updates the API Server with the current status of those containers running on the node where kubelet running. Kubelet will be sending this kind of heart-beat status update to API Server frequently.
+- The API Server retrieves the Pod entries from etcd database and it updates the status of the Pod based on the status details send by the kubelet.
+```
