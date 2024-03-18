@@ -376,3 +376,36 @@ Now using project "jegan" on server "https://api.ocp.tektutor.org.labs:6443".
 [jegan@tektutor.org openshift-march-2024]$ oc project default
 Now using project "default" on server "https://api.ocp.tektutor.org.labs:6443".  
 </pre>
+
+## Lab - Creating your first deployment in Openshift
+```
+oc create deployment nginx --image=nginx:latest
+```
+
+Expected ouptut
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc create deployment nginx --image=nginx:latest 
+deployment.apps/nginx created 
+</pre>
+
+Listing the deployments
+```
+oc get deployments
+oc get deployment
+oc get deploy
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc get deployments
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/1     1            0           81s
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get deployment
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/1     1            0           2m34s
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get deploy
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/1     1            0           2m37s  
+</pre>
