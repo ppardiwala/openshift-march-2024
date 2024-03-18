@@ -511,3 +511,36 @@ nginx: [emerg] mkdir() "/var/cache/nginx/client_temp" failed (13: Permission den
 - Many folders within the OS is made as ready only
 - Any application Pod attempts to perform write operation on those restricted folders will not be allowed to run
 - For detailed documentation, please refer official documentation here https://docs.openshift.com/container-platform/4.8/architecture/architecture-rhcos.html
+
+## Lab - Listing all the resources in your project
+```
+oc project
+oc get deploy,rs,po
+oc get all
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc project
+Using project "jegan" on server "https://api.ocp.tektutor.org.labs:6443".
+[jegan@tektutor.org openshift-march-2024]$ oc get deploy,rs,po
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   0/1     1            0           35m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-7bf8c77b5b   1         1         0       35m
+
+NAME                         READY   STATUS             RESTARTS         AGE
+pod/nginx-7bf8c77b5b-mmvqf   0/1     CrashLoopBackOff   11 (4m12s ago)   35m
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+NAME                         READY   STATUS             RESTARTS         AGE
+pod/nginx-7bf8c77b5b-mmvqf   0/1     CrashLoopBackOff   11 (4m28s ago)   36m
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   0/1     1            0           36m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-7bf8c77b5b   1         1         0       36m  
+</pre>
