@@ -220,7 +220,7 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
   - Worker 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
   - Worker 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
   - HAProxy Load Balancer Virtual Machine
-  - One more VM created/destroyed during Openshift installation
+  - One more VM created/destroyed during Openshift installation (BootStrap Virtual Machine)
 - OS1 ( 10.10.15.107 ) - Openshift cluster 1 ( 9 participants - user01 thru user09 )
 - OS2 ( 10.10.15.106 ) - Openshift cluster 2 ( 8 participants - user10 thru user17 )
 - OS3 ( 10.10.15.105 ) - openshift cluster 3 ( 8 participants - user18 thru user25 )
@@ -234,7 +234,7 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 ## About Red Hat Core OS (RHCOS)
 - is an optimized enterprise grade operating system used in Orchestration Platforms like Red Hat OpenShift
 - it uses a boot configuration file called ignition file
-- the ignition files have to kept in a load balancer that the RHCOS machine can access
+- the ignition files have to be kept in a load balancer that the RHCOS machine can access
 - only thru the remote ignition files the RHCOS can be booted
 
 ## Imperative vs Declarative
