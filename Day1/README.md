@@ -225,6 +225,12 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 - OS2 ( 10.10.15.106 ) - Openshift cluster 2 ( 8 participants - user10 thru user17 )
 - OS3 ( 10.10.15.105 ) - openshift cluster 3 ( 8 participants - user18 thru user25 )
 
+## Red Hat Openshift
+- can be installed in On-Prem servers
+- can be installed manually in public clouds (AWS, Azure, GCP, Digital Ocean, etc)
+- AWS managed services ( ROSA - Red Hat OpenShift )
+- Azure managed service ( ARO - Azure Red Hat OpenShift )
+
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
 oc get nodes
