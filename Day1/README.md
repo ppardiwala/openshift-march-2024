@@ -53,7 +53,6 @@
 ## What is Container Orchestration Platform?
 - manages the containerized application workloads
 - has one or more servers ( cluster )
-- 
 - most popular features that are supported by any Container Orchestration Platform
   - high availability to your applications that runs with Container Orchestration Platforms
   - it also supports in-built load-balancing, monitoring features to heal/repair your non-responding applications, etc.,
@@ -61,4 +60,15 @@
   - rolling update
     - you can upgrade/downgrade your already alive application from one version to other without any downtime
     - rolling back to older version of an application is also possible
-
+- Examples
+  - Docker SWARM
+  - Kubernetes
+  - Red Hat OpenShift
+ 
+## What is Docker SWARM?
+- it is an Orchestration platfrom from Docker Inc organization
+- it is open-source
+- it is not production-grade
+- it is very light-weight setup, you could install this easily on a normal laptop/desktop
+- generally used for learning purpose, Dev/QA setup
+- never seen this in production
