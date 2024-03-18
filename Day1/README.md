@@ -248,6 +248,34 @@ oc describe node master-1.ocp.tektutor.org.labs
 Expected output
 ![nodets](2.png)
 
+## Lab - Finding more details about Openshift private image registry
+```
+oc describe svc/image-registry -n openshift-image-registry
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc describe svc/image-registry -n openshift-image-registry
+Name:              image-registry
+Namespace:         openshift-image-registry
+Labels:            docker-registry=default
+Annotations:       imageregistry.operator.openshift.io/checksum: sha256:1c19715a76014ae1d56140d6390a08f14f453c1a59dc36c15718f40c638ef63d
+                   service.alpha.openshift.io/serving-cert-secret-name: image-registry-tls
+                   service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710727234
+                   service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710727234
+Selector:          docker-registry=default
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                172.30.193.120
+IPs:               172.30.193.120
+Port:              5000-tcp  5000/TCP
+TargetPort:        5000/TCP
+Endpoints:         10.128.0.38:5000
+Session Affinity:  None
+Events:            <none>  
+</pre>
+
 ## Lab - Create an openshift project
 
 In the below command, replace 'jegan' with your name.
