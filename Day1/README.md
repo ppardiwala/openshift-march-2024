@@ -231,6 +231,12 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 - AWS managed services ( ROSA - Red Hat OpenShift )
 - Azure managed service ( ARO - Azure Red Hat OpenShift )
 
+## About Red Hat Core OS (RHCOS)
+- is an optimized enterprise grade operating system used in Orchestration Platforms like Red Hat OpenShift
+- it uses a boot configuration file called ignition file
+- the ignition files have to kept in a load balancer that the RHCOS machine can access
+- only thru the remote ignition files the RHCOS can be booted
+
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
 oc get nodes
