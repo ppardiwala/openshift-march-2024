@@ -544,3 +544,23 @@ deployment.apps/nginx   0/1     1            0           36m
 NAME                               DESIRED   CURRENT   READY   AGE
 replicaset.apps/nginx-7bf8c77b5b   1         1         0       36m  
 </pre>
+
+## Lab - Deleting the nginx deployment
+```
+oc delete deploy/nginx
+oc get deploy,rs,po
+oc get all
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc delete deploy/nginx
+deployment.apps "nginx" deleted
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get deploy,rs,po
+No resources found in jegan namespace.
+
+[jegan@tektutor.org openshift-march-2024]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+No resources found in jegan namespace.  
+</pre>
