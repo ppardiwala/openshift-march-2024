@@ -97,3 +97,12 @@
 - This supports Command-line and Web-console
 - Openshift also support CI/CD
 - OpenShift is capable of building an application from source code and deploy that as containized workloads within OpenShift
+
+## Lab - Listing all nodes in the OpenShift cluster
+```
+oc get nodes
+oc get nodes -o wide
+```
+
+Expected output
+![nodes](nodes.png)
