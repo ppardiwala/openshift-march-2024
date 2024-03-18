@@ -112,6 +112,7 @@
   - worker nodes
     - this is where normally the user application instances will be running
 
+# Control Plane components
 ## API Server
 - this is a Pod that runs in all the master nodes
 - API Servers supports REST APIs for every OpenShift functionality
@@ -138,6 +139,25 @@
   - ReplicaSet Controller that manages ReplicaSet resource
   - DaemonSet Controller that manages DaemonSet
   - StatefulSet Controller that manages StatefulSet
+
+## Info - Worker Nodes
+- this is where user applications run
+
+## Info - Common components that runs on both master and worker nodes
+- kube-proxy
+  - this is the one which support load-balancing
+
+- kubelet
+  - this is a container agent components that interacts with CRI-O Container Runtime
+  - responsible for creating new application pods and reporting their status to master nodes
+  - monitors health of application pods running on the local node and repairing them if required
+
+- coredns
+  - DNS - Domain naming server
+  - In office network, you will have a DNS server that resolve all your machine hostname to their corresponding IP address
+  - this runs in every node (master and worker )
+  - this helps in Service discovery
+    i.e resolving the Ip address of a service by its name
 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
