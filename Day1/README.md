@@ -609,3 +609,24 @@ nginx-bb865dc5f-hm8tl   1/1     Running             0          16s
 nginx-bb865dc5f-q5xkf   1/1     Running             0          17s
 ^C[jegan@tektutor.org openshift-march-2024]$   
 </pre>
+
+## Lab - Finding IP address of a Pod and figure out which pod is running on which node
+```
+oc get po
+oc get po -o wide
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc get po
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-bb865dc5f-225lb   1/1     Running   0          14m
+nginx-bb865dc5f-g6p6t   1/1     Running   0          93s
+nginx-bb865dc5f-q5xkf   1/1     Running   0          14m
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get po -o wide
+NAME                    READY   STATUS    RESTARTS   AGE   IP             NODE                             NOMINATED NODE   READINESS GATES
+nginx-bb865dc5f-225lb   1/1     Running   0          14m   10.128.0.224   master-1.ocp.tektutor.org.labs   <none>           <none>
+nginx-bb865dc5f-g6p6t   1/1     Running   0          97s   10.131.0.8     worker-2.ocp.tektutor.org.labs   <none>           <none>
+nginx-bb865dc5f-q5xkf   1/1     Running   0          14m   10.128.2.38    worker-1.ocp.tektutor.org.labs   <none>           <none> 
+</pre>
