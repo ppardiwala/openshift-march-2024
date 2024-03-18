@@ -72,3 +72,22 @@
 - it is very light-weight setup, you could install this easily on a normal laptop/desktop
 - generally used for learning purpose, Dev/QA setup
 - never seen this in production
+- it only supports managing Docker containerized applications
+
+## What is Kubernetes?
+- it is an Orchestration platfrom from Google
+- it is open-source
+- it is production-grade
+- it can be used in Dev/QA/Production pretty much everyone
+- as it is open-source we don't get any official support
+- AWS offers managed EKS - Elastic Kubernetes Service, you can get support from Amazon
+- Azure offers managed AKS - Azure Kubernetes Service, you can get support from Microsoft
+- Kuberetes supports Operators and Custom Resource Definitions to extend the functionality of Kubernetes
+
+## What is OpenShift?
+- it is an Orchestration platfrom from Red Hat
+- it is Red Hat's distribution of Kubernetes
+- Openshift is developed on top of opensource Google Kubernetes with many additional features
+- OpenShift using Kubernetes Operators( ie Custom Resources and Customer Operators ) has added many additional features on top of Kubernetes
+- You will get support from Red Hat
+- It is a licensed product
