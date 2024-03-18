@@ -558,6 +558,9 @@ replicaset.apps/nginx-7bf8c77b5b   1         1         0       36m
 </pre>
 
 ## Lab - Deleting the nginx deployment
+
+When we delete a deployment, deployment is the parent object.  Automatically, deployment will delete the replicaset as part of the deployment delete procedure.  The replicaset will automatically delete all the Pods under that.  Hence, when we delete a deployment, it will delete deployment, replicaset and all the pods in the deployment.
+
 ```
 oc delete deploy/nginx
 oc get deploy,rs,po
