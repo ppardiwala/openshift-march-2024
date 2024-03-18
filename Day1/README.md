@@ -437,3 +437,25 @@ nginx   0/1     1            0           2m34s
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   0/1     1            0           2m37s  
 </pre>
+
+Listing the replicasets
+```
+oc get replicasets
+oc get replicaset
+oc get rs
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc get replicasets
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-7bf8c77b5b   1         1         0       10m
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get replicaset
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-7bf8c77b5b   1         1         0       10m
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get rs
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-7bf8c77b5b   1         1         0       10m  
+</pre>
