@@ -33,3 +33,19 @@
     - restrict how many cpu cores a particular container can utilize
     - restrict how much RAM a particular container at the max can utilize
     - restric how much storage a particular container at the max can utilize
+
+## What is a Container Engine?
+- a high-level software that depends on Container Runtime to manage container images and containers
+- it offers user-friendly commands to manage images and containers but it depends on Container Runtimes to do that under the hood
+- examples
+  - Docker depends on containerd which internally uses runC container Runtime
+  - Podman depends on CRI-O Container Runtime to manage images and containers
+
+## What is a Container Runtime?
+- low-level software that know how to manage container images and containers
+- it is not so user-friendly, hence normally end-users like us wouldn't use container runtime directly
+- end-user will be using Container Engine not the Container runtime
+- Exmaples
+  - runC
+  - CRI-O
+  - rkt (pronounced as Rocket)
