@@ -106,3 +106,12 @@ oc get nodes -o wide
 
 Expected output
 ![nodes](nodes.png)
+
+## Lab - Finding more details about a node
+```
+oc get nodes
+oc describe node master-1.ocp.tektutor.org.labs
+```
+
+Expected output
+![nodets](2.png)
