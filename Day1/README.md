@@ -16,3 +16,12 @@
   - 
 - docker container
   - it is an application process that runs in a separate unix namespace
+
+## Linux Kernel Container Features
+- Namespace
+  - allows to isolate one container from rest of the other containers
+- Control Groups (CGroups)
+  - let's you apply some resource quota restricts like
+    - restrict how many cpu cores a particular container can utilize
+    - restrict how much RAM a particular container at the max can utilize
+    - restric how much storage a particular container at the max can utilize
