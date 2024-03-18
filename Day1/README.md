@@ -725,3 +725,12 @@ The below things happens
 - The kubelet container agent running on respective nodes receives the event, it then pull the container image from respective container registry, creates the containers for the Pods, updates the API Server with the current status of those containers running on the node where kubelet running. Kubelet will be sending this kind of heart-beat status update to API Server frequently.
 - The API Server retrieves the Pod entries from etcd database and it updates the status of the Pod based on the status details send by the kubelet.
 ```
+
+## Info - Pod - a deep dive
+```
+- Pod is a collection of related containers
+- Pod is a database entry created in the master node's etcd database
+- Every Pod has atleast 2 containers
+  - Infra Container ( this supplies network - IP address )
+  - application continer ( Infra container network is shared by the application container )
+```
