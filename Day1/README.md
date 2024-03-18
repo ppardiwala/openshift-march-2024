@@ -49,3 +49,13 @@
   - runC
   - CRI-O
   - rkt (pronounced as Rocket)
+
+## What is Container Orchestration Platform?
+- manages the containerized application workloads
+- most popular features that are supported by any Container Orchestration Platform
+  - high availability to your applications that runs with Container Orchestration Platforms
+  - it also supports in-built load-balancing, monitoring features to heal/repair your non-responding applications, etc.,
+  - it also supports scaling up/down ( increase/reduce the no of application instances - depending on user traffic )
+  - rolling update
+    - you can upgrade/downgrade your already alive application from one version to other without any downtime
+    - rolling back to older version of an application is also possible
