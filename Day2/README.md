@@ -311,3 +311,154 @@ nginx   LoadBalancer   172.30.217.133   192.168.122.90   8080:32673/TCP   4s
 [jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-lb-svc.yml 
 service "nginx" deleted  
 </pre>
+
+## Lab - Rolling update
+```
+
+```
+
+Expected output
+<pre>
+
+</pre>
+
+## Lab - Creating a mysql deployment in declarative style
+Create a file named mysql-deploy.yml with the below content
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: root@123
+        image: bitnami/mariadb:latest
+        imagePullPolicy: Always
+        name: mysql
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+```
+
+Create the mysql deployment as shown below
+```
+oc apply -f mysql-deploy.yml
+oc get deploy,rs,po
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org declarative-scripts]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+No resources found in jegan namespace.
+[jegan@tektutor.org declarative-scripts]$ oc apply -f mysql-deploy.yml 
+deployment.apps/mysql created
+[jegan@tektutor.org declarative-scripts]$ oc get deploy,rs,po
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mysql   0/1     1            0           6s
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/mysql-8689bc77f7   1         1         0       6s
+
+NAME                         READY   STATUS              RESTARTS   AGE
+pod/mysql-8689bc77f7-mt85r   0/1     ContainerCreating   0          6s
+[jegan@tektutor.org declarative-scripts]$ oc get po -w
+NAME                     READY   STATUS    RESTARTS   AGE
+mysql-8689bc77f7-mt85r   1/1     Running   0          12s
+^C[jegan@tektutor.org declarative-scripts]$ oc rsh pod/mysql-8689bc77f7-mt85r
+$ mysql -u root -p
+mysql: Deprecated program name. It will be removed in a future release, use '/opt/bitnami/mariadb/bin/mariadb' instead
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 11.2.3-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [(none)]> CREATE DATABASE tektutor;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> 
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| tektutor           |
+| test               |
++--------------------+
+6 rows in set (0.000 sec)
+
+MariaDB [(none)]> USE tektutor;
+Database changed
+MariaDB [tektutor]> SHOW TABLES;
+Empty set (0.000 sec)
+
+MariaDB [tektutor]> CREATE TABLE training ( id INT NOT NULL, name VARCHAR(250) NOT NULL, duration VARCHAR(250) NOT NULL, PRIMARY KEY(id) );
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [tektutor]> DESCRIBE training;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id       | int(11)      | NO   | PRI | NULL    |       |
+| name     | varchar(250) | NO   |     | NULL    |       |
+| duration | varchar(250) | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [tektutor]> INSERT INTO training VALUES ( 1, "Advanced OpenShift", "5 Days" );
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [tektutor]> INSERT INTO training VALUES ( 2, "Microservices with Go lang", "5 Days" );
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [tektutor]> INSERT INTO training VALUES ( 3, "Apache Kafka", "5 Days" );
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [tektutor]> SELECT * FROM training;
++----+----------------------------+----------+
+| id | name                       | duration |
++----+----------------------------+----------+
+|  1 | Advanced OpenShift         | 5 Days   |
+|  2 | Microservices with Go lang | 5 Days   |
+|  3 | Apache Kafka               | 5 Days   |
++----+----------------------------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [tektutor]> exit
+Bye
+$ exit
+[jegan@tektutor.org declarative-scripts]$   
+</pre>
