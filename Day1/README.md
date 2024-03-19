@@ -782,4 +782,59 @@ oc describe svc/nginx
 
 Expected output
 ![clusterip](clusterip.png)
- 
+
+To access the ClusterIP Internal service, let's create a test pod that has curl tool installed on it
+```
+oc run test-pod --image=tektutor/spring-ms:1.0
+oc get po
+oc rsh pod/test-pod
+curl http://nginx:8080
+```
+
+Expected output
+```
+[jegan@tektutor.org openshift-march-2024]$ oc run test-pod --image=tektutor/spring-ms:1.0
+Warning: would violate PodSecurity "restricted:v1.24": allowPrivilegeEscalation != false (container "test-pod" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "test-pod" must set securityContext.capabilities.drop=["ALL"]), runAsNonRoot != true (pod or container "test-pod" must set securityContext.runAsNonRoot=true), seccompProfile (pod or container "test-pod" must set securityContext.seccompProfile.type to "RuntimeDefault" or "Localhost")
+pod/test-pod created
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get po
+NAME                    READY   STATUS              RESTARTS   AGE
+nginx-bb865dc5f-92x4z   1/1     Running             0          77m
+nginx-bb865dc5f-drsln   1/1     Running             0          17h
+nginx-bb865dc5f-g675h   1/1     Running             0          77m
+test-pod                0/1     ContainerCreating   0          2s
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get po -w
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-bb865dc5f-92x4z   1/1     Running   0          77m
+nginx-bb865dc5f-drsln   1/1     Running   0          17h
+nginx-bb865dc5f-g675h   1/1     Running   0          77m
+test-pod                1/1     Running   0          4s
+
+[jegan@tektutor.org openshift-march-2024]$ oc rsh pod/test-pod
+sh-4.4# curl http://nginx:8080
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+sh-4.4#   
+```
