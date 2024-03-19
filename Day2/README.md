@@ -121,3 +121,50 @@ deployment.apps "nginx" deleted
 Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
 No resources found in jegan namespace.  
 </pre>
+
+## Lab - Creating a pod in declarative style
+```
+oc run nginx-pod --image=bitnami/nginx:latest --dry-run=client -o yaml
+oc run nginx-pod --image=bitnami/nginx:latest --dry-run=client -o yaml > nginx-pod.yml
+oc apply -f nginx-pod.yml
+oc get po
+oc delete -f nginx-pod.yml
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org declarative-scripts]$ ls
+nginx-deploy.yml  nginx-rs.yml
+[jegan@tektutor.org declarative-scripts]$ oc run nginx-pod --image=bitnami/nginx:latest --dry-run=client -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-pod
+  name: nginx-pod
+spec:
+  containers:
+  - image: bitnami/nginx:latest
+    name: nginx-pod
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+[jegan@tektutor.org declarative-scripts]$ oc run nginx-pod --image=bitnami/nginx:latest --dry-run=client -o yaml > nginx-pod.yml
+  
+[jegan@tektutor.org declarative-scripts]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+No resources found in jegan namespace.
+  
+[jegan@tektutor.org declarative-scripts]$ oc apply -f nginx-pod.yml 
+Warning: would violate PodSecurity "restricted:v1.24": allowPrivilegeEscalation != false (container "nginx-pod" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "nginx-pod" must set securityContext.capabilities.drop=["ALL"]), runAsNonRoot != true (pod or container "nginx-pod" must set securityContext.runAsNonRoot=true), seccompProfile (pod or container "nginx-pod" must set securityContext.seccompProfile.type to "RuntimeDefault" or "Localhost")
+pod/nginx-pod created
+  
+[jegan@tektutor.org declarative-scripts]$ oc get po
+NAME        READY   STATUS    RESTARTS   AGE
+nginx-pod   1/1     Running   0          6s
+  
+[jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-pod.yml 
+pod "nginx-pod" deleted  
+</pre>
