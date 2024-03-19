@@ -838,3 +838,61 @@ Commercial support is available at
 </html>
 sh-4.4#   
 ```
+
+## Lab - How service discovery works in OpenShift
+```
+- Openshift has a default-dns service created under openshift-dns namespace/project
+```
+
+We can list the default-dn service as shown below
+```
+oc get svc -n openshift-dns
+oc describe svc/default-dns -n openshift-dns
+oc get pod -o wide -n openshift-dns
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc get svc -n openshift-dns
+NAME          TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                  AGE
+dns-default   ClusterIP   172.30.0.10   <none>        53/UDP,53/TCP,9154/TCP   28h
+[jegan@tektutor.org openshift-march-2024]$ 
+
+[jegan@tektutor.org openshift-march-2024]$ oc describe svc/dns-default -n openshift-dns
+Name:              dns-default
+Namespace:         openshift-dns
+Labels:            dns.operator.openshift.io/owning-dns=default
+Annotations:       service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710727234
+                   service.beta.openshift.io/serving-cert-secret-name: dns-default-metrics-tls
+                   service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710727234
+Selector:          dns.operator.openshift.io/daemonset-dns=default
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                172.30.0.10
+IPs:               172.30.0.10
+Port:              dns  53/UDP
+TargetPort:        dns/UDP
+Endpoints:         10.128.0.2:5353,10.128.2.3:5353,10.129.0.38:5353 + 2 more...
+Port:              dns-tcp  53/TCP
+TargetPort:        dns-tcp/TCP
+Endpoints:         10.128.0.2:5353,10.128.2.3:5353,10.129.0.38:5353 + 2 more...
+Port:              metrics  9154/TCP
+TargetPort:        metrics/TCP
+Endpoints:         10.128.0.2:9154,10.128.2.3:9154,10.129.0.38:9154 + 2 more...
+Session Affinity:  None
+Events:            <none>
+
+[jegan@tektutor.org openshift-march-2024]$ oc get pod -o wide -n openshift-dns
+NAME                  READY   STATUS    RESTARTS   AGE   IP                NODE                             NOMINATED NODE   READINESS GATES
+<b></b>dns-default-2tbp4     2/2     Running   0          28h   10.128.2.3        worker-1.ocp.tektutor.org.labs   <none>           <none>
+dns-default-59d8q     2/2     Running   0          28h   10.128.0.2        master-1.ocp.tektutor.org.labs   <none>           <none>
+dns-default-hx5wk     2/2     Running   0          28h   10.129.0.38       master-2.ocp.tektutor.org.labs   <none>           <none>
+dns-default-lbwl2     2/2     Running   0          28h   10.130.0.3        master-3.ocp.tektutor.org.labs   <none>           <none>
+dns-default-vb465     2/2     Running   0          28h   10.131.0.3        worker-2.ocp.tektutor.org.labs   <none>           <none></b>
+node-resolver-69jdx   1/1     Running   0          28h   192.168.122.16    master-2.ocp.tektutor.org.labs   <none>           <none>
+node-resolver-6vfjz   1/1     Running   0          28h   192.168.122.126   worker-1.ocp.tektutor.org.labs   <none>           <none>
+node-resolver-bnjkx   1/1     Running   0          28h   192.168.122.188   master-3.ocp.tektutor.org.labs   <none>           <none>
+node-resolver-fx6rm   1/1     Running   0          28h   192.168.122.112   worker-2.ocp.tektutor.org.labs   <none>           <none>
+node-resolver-pvcvt   1/1     Running   0          28h   192.168.122.222   master-1.ocp.tektutor.org.labs   <none>           <none>
+[jegan@tektutor.org openshift-march-2024]
