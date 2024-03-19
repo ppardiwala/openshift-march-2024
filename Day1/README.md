@@ -885,14 +885,9 @@ Events:            <none>
 
 [jegan@tektutor.org openshift-march-2024]$ oc get pod -o wide -n openshift-dns
 NAME                  READY   STATUS    RESTARTS   AGE   IP                NODE                             NOMINATED NODE   READINESS GATES
-<b></b>dns-default-2tbp4     2/2     Running   0          28h   10.128.2.3        worker-1.ocp.tektutor.org.labs   <none>           <none>
+dns-default-2tbp4     2/2     Running   0          28h   10.128.2.3        worker-1.ocp.tektutor.org.labs   <none>           <none>
 dns-default-59d8q     2/2     Running   0          28h   10.128.0.2        master-1.ocp.tektutor.org.labs   <none>           <none>
 dns-default-hx5wk     2/2     Running   0          28h   10.129.0.38       master-2.ocp.tektutor.org.labs   <none>           <none>
 dns-default-lbwl2     2/2     Running   0          28h   10.130.0.3        master-3.ocp.tektutor.org.labs   <none>           <none>
-dns-default-vb465     2/2     Running   0          28h   10.131.0.3        worker-2.ocp.tektutor.org.labs   <none>           <none></b>
-node-resolver-69jdx   1/1     Running   0          28h   192.168.122.16    master-2.ocp.tektutor.org.labs   <none>           <none>
-node-resolver-6vfjz   1/1     Running   0          28h   192.168.122.126   worker-1.ocp.tektutor.org.labs   <none>           <none>
-node-resolver-bnjkx   1/1     Running   0          28h   192.168.122.188   master-3.ocp.tektutor.org.labs   <none>           <none>
-node-resolver-fx6rm   1/1     Running   0          28h   192.168.122.112   worker-2.ocp.tektutor.org.labs   <none>           <none>
-node-resolver-pvcvt   1/1     Running   0          28h   192.168.122.222   master-1.ocp.tektutor.org.labs   <none>           <none>
+dns-default-vb465     2/2     Running   0          28h   10.131.0.3        worker-2.ocp.tektutor.org.labs   <none>           <none><
 [jegan@tektutor.org openshift-march-2024]
