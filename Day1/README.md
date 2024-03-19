@@ -769,6 +769,15 @@ Handling connection for 9080
 You shall be able to access the web page served by the Pod from your web browser
 http://localhost:9080
 
+## Info - Kubernetes/OpenShift service
+There are 3 types of services
+1. ClusterIP (Internal service) - any database we could this type of service
+2. NodePort (External service) - Microservice
+3. LoadBalancer (External Service) - web site home page ( meant to be in public cloud like AWS,Azure)
+
+In Openshift, generally NodePort and LoadBalancer services are not used.  Openshift supports a new feature called Route which make the service accessible externally with a user-friendly public url.
+
+In Openshift, for internal service we can ClusterIp and for external create a route for the clusterIp service.
 ## Lab - Creating a ClusterIP Internal service
 ```
 oc get deploy,rs,po
