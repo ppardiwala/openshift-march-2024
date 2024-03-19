@@ -19,7 +19,7 @@ metadata:
     app: nginx
   name: nginx
 spec:
-  <b>replicas: 1</b>
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -71,7 +71,7 @@ metadata:
     app: nginx
   name: nginx
 spec:
-  replicas: 3
+  <b>replicas: 3</b>
   selector:
     matchLabels:
       app: nginx
