@@ -180,8 +180,15 @@ oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > n
 oc apply -f nginx-clusterip-svc.yml
 oc get svc
 oc delete -f nginx-svc.yml
-```
 
+oc apply -f nginx-nodeport-svc.yml
+oc get svc
+oc delete -f nginx-nodeport-svc.yml 
+
+oc apply -f nginx-lb-svc.yml
+oc get svc
+oc delete -f nginx-lb-svc.yml 
+```
 
 Expected output
 <pre>
@@ -230,4 +237,77 @@ service "nginx" deleted
   
 [jegan@tektutor.org declarative-scripts]$ oc get svc
 No resources found in jegan namespace.
+</pre>
+
+
+## Lab - Creating NodePort and LoadBalancer services in declarative style
+```
+oc get all
+oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml
+oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml > nginx-nodeport-svc.yml
+oc expose deploy/nginx --type=LoadBalancer --port=8080 --dry-run=client -o yaml > nginx-lb-svc.yml
+
+```
+
+
+Expected output
+<pre>
+[jegan@tektutor.org declarative-scripts]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/nginx-58bfb7c6b-n9z4l   1/1     Running   0          8m44s
+pod/nginx-58bfb7c6b-qn6dh   1/1     Running   0          8m44s
+pod/nginx-58bfb7c6b-tnkth   1/1     Running   0          8m44s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   3/3     3            3           8m44s
+
+NAME                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-58bfb7c6b   3         3         3       8m44s
+  
+[jegan@tektutor.org declarative-scripts]$ oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: nginx
+  type: NodePort
+status:
+  loadBalancer: {}
+  
+[jegan@tektutor.org declarative-scripts]$ oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml > nginx-nodeport-svc.yml
+  
+[jegan@tektutor.org declarative-scripts]$ oc expose deploy/nginx --type=LoadBalancer --port=8080 --dry-run=client -o yaml > nginx-lb-svc.yml
+  
+[jegan@tektutor.org declarative-scripts]$ ls
+nginx-clusterip-svc.yml  nginx-deploy.yml  nginx-lb-svc.yml  nginx-nodeport-svc.yml  nginx-pod.yml  nginx-rs.yml
+  
+[jegan@tektutor.org declarative-scripts]$ oc apply -f nginx-nodeport-svc.yml 
+service/nginx created
+  
+[jegan@tektutor.org declarative-scripts]$ oc get svc
+NAME    TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+nginx   NodePort   172.30.232.98   <none>        8080:31812/TCP   3s
+  
+[jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-nodeport-svc.yml 
+service "nginx" deleted
+  
+[jegan@tektutor.org declarative-scripts]$ oc apply -f nginx-lb-svc.yml 
+service/nginx created
+  
+[jegan@tektutor.org declarative-scripts]$ oc get svc
+NAME    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)          AGE
+nginx   LoadBalancer   172.30.217.133   192.168.122.90   8080:32673/TCP   4s
+  
+[jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-lb-svc.yml 
+service "nginx" deleted  
 </pre>
