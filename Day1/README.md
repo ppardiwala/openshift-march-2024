@@ -756,3 +756,8 @@ exit
 Now you may notice that the IP address of nginx-pause-container and nginx container is one and the same as they both are sharing the network stack.
 
 This is how Pods are created in Kubernetes and Openshift.
+
+## Day 1 - Feedback
+https://survey.zohopublic.com/zs/dQBqlm
+
+ 
