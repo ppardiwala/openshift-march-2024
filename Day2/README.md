@@ -19,7 +19,7 @@ metadata:
     app: nginx
   name: nginx
 spec:
-  replicas: 1
+  <b>replicas: 1</b>
   selector:
     matchLabels:
       app: nginx
