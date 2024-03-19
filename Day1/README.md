@@ -950,3 +950,5 @@ In OpenShift, we could use route as an alternate to Node Port service.
 
 ## Lab - Installing Metallb Operator to support LoadBalancer service in a onPrem Openshift cluster
 https://medium.com/tektutor/using-metallb-loadbalancer-with-bare-metal-openshift-onprem-4230944bfa35
+
+
