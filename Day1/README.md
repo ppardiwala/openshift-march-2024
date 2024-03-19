@@ -923,3 +923,27 @@ exit
 NAME          TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                  AGE
 dns-default   ClusterIP   172.30.0.10   <none>        53/UDP,53/TCP,9154/TCP   28h
 </pre>
+
+## Lab - Creating a NodePort external service for nginx deployment
+```
+oc get deploy
+oc expose deploy/nginx --type=NodePort --port=8080
+oc get svc
+oc describe svc/nginx
+```
+
+You can access the NodePort service as shown below
+```
+curl http://master-1.ocp.tektutor.org.labs:32342
+curl http://master-2.ocp.tektutor.org.labs:32342
+curl http://master-3.ocp.tektutor.org.labs:32342
+curl http://worker-1.ocp.tektutor.org.labs:32342
+curl http://worker-2.ocp.tektutor.org.labs:32342
+```
+
+Node Port drawbacks
+- it is not user-friendly
+- we need open up the 32342 nodeport in every node firewall
+- assuming your product supports 100 features, if you decide to expose all those 100 features as node port service then you will end up opening 100 ports in the range 30000-32767 (Reserved NodePort range) in all the nodes
+
+In OpenShift, we could use route as an alternate to Node Port service.
