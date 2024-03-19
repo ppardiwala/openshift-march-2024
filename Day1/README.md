@@ -773,6 +773,11 @@ http://localhost:9080
 ```
 oc get deploy,rs,po
 oc expose deploy/nginx --type=ClusterIP --port=8080
+
+oc get services
+oc get service
+oc get svc
+oc describe svc/nginx
 ```
 
 Expected output
