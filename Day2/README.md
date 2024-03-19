@@ -168,3 +168,66 @@ nginx-pod   1/1     Running   0          6s
 [jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-pod.yml 
 pod "nginx-pod" deleted  
 </pre>
+
+## Lab - Creating a ClusterIP Internal Service in declarative style
+```
+cd ~/openshift-march-2024
+git pull
+cd Day2/declarative-scripts
+oc apply -f nginx-deploy.yml
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-clusterip-svc.yml
+oc apply -f nginx-clusterip-svc.yml
+oc get svc
+oc delete -f nginx-svc.yml
+```
+
+
+Expected output
+<pre>
+[jegan@tektutor.org declarative-scripts]$ ls
+nginx-deploy.yml  nginx-pod.yml  nginx-rs.yml
+  
+[jegan@tektutor.org declarative-scripts]$ oc apply -f nginx-deploy.yml 
+deployment.apps/nginx created
+  
+[jegan@tektutor.org declarative-scripts]$ oc get po
+NAME                    READY   STATUS              RESTARTS   AGE
+nginx-58bfb7c6b-n9z4l   0/1     ContainerCreating   0          4s
+nginx-58bfb7c6b-qn6dh   0/1     ContainerCreating   0          4s
+nginx-58bfb7c6b-tnkth   0/1     ContainerCreating   0          4s
+  
+[jegan@tektutor.org declarative-scripts]$ oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: nginx
+  type: ClusterIP
+status:
+  loadBalancer: {}
+  
+[jegan@tektutor.org declarative-scripts]$ oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-clusterip-svc.yml
+  
+[jegan@tektutor.org declarative-scripts]$ oc apply -f nginx-clusterip-svc.yml 
+service/nginx created
+  
+[jegan@tektutor.org declarative-scripts]$ oc get svc
+NAME    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+nginx   ClusterIP   172.30.79.19   <none>        8080/TCP   2s
+  
+[jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-clusterip-svc.yml 
+service "nginx" deleted
+  
+[jegan@tektutor.org declarative-scripts]$ oc get svc
+No resources found in jegan namespace.
+</pre>
