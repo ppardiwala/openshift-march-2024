@@ -769,7 +769,12 @@ Handling connection for 9080
 You shall be able to access the web page served by the Pod from your web browser
 http://localhost:9080
 
-## Day 1 - Feedback
-https://survey.zohopublic.com/zs/dQBqlm
+## Lab - Creating a ClusterIP Internal service
+```
+oc get deploy,rs,po
+oc expose deploy/nginx --type=ClusterIP --port=8080
+```
 
+Expected output
+![clusterip](clusterip.png)
  
