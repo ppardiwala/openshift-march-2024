@@ -518,8 +518,8 @@ nginx: [emerg] mkdir() "/var/cache/nginx/client_temp" failed (13: Permission den
 
 ### Points to remember
 - Red Hat Openshift uses RedHat Enterprise Linux Core OS
-- RHELCOS has many restrictions
-- RHEL Core OS reservs ports under 1024 for its internal use
+- RHCOS has many restrictions or insists best practises
+- RHEL Core OS reserves ports under 1024 for its internal use
 - Many folders within the OS is made as ready only
 - Any application Pod attempts to perform write operation on those restricted folders will not be allowed to run
 - For detailed documentation, please refer official documentation here https://docs.openshift.com/container-platform/4.8/architecture/architecture-rhcos.html
