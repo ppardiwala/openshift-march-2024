@@ -1,0 +1,10 @@
+apiVersion: tektutor.org/v1
+kind: Training 
+metadata:
+  name: openshift-training 
+spec:
+  training: "Advanced OpenShift"
+  duration: "5 Days" 
+  city: "Chennai"
+  from: "4th Nov 2023"
+  to: "8th Nov 2023"
