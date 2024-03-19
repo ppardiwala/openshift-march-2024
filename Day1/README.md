@@ -757,6 +757,18 @@ Now you may notice that the IP address of nginx-pause-container and nginx contai
 
 This is how Pods are created in Kubernetes and Openshift.
 
+## Lab - Port forwarding a Pod for testing purpose
+```
+[jegan@tektutor.org openshift-march-2024]$ oc port-forward pod/nginx-bb865dc5f-drsln 9080:8080
+Forwarding from 127.0.0.1:9080 -> 8080
+Forwarding from [::1]:9080 -> 8080
+Handling connection for 9080
+Handling connection for 9080
+```
+
+You shall be able to access the web page served by the Pod from your web browser
+http://localhost:9080
+
 ## Day 1 - Feedback
 https://survey.zohopublic.com/zs/dQBqlm
 
