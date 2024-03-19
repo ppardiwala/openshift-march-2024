@@ -947,3 +947,6 @@ Node Port drawbacks
 - assuming your product supports 100 features, if you decide to expose all those 100 features as node port service then you will end up opening 100 ports in the range 30000-32767 (Reserved NodePort range) in all the nodes
 
 In OpenShift, we could use route as an alternate to Node Port service.
+
+## Lab - Installing Metallb Operator to support LoadBalancer service in a onPrem Openshift cluster
+https://medium.com/tektutor/using-metallb-loadbalancer-with-bare-metal-openshift-onprem-4230944bfa35
