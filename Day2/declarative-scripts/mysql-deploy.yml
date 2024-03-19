@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - env:
+        - name: MARIADB_ROOT_PASSWORD
+          value: root@123
+        image: bitnami/mariadb:latest
+        imagePullPolicy: Always
+        name: mysql
+        ports:
+        - containerPort: 3306
+          protocol: TCP
