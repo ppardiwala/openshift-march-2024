@@ -100,3 +100,24 @@ nginx-58bfb7c6b-l6zlp   0/1     ContainerCreating   0          3s
 nginx-58bfb7c6b-l6zlp   1/1     Running             0          5s
 nginx-58bfb7c6b-7nvgh   1/1     Running             0          6s  
 </pre>
+
+## Lab - Deleting a deployment in declarative style
+```
+cd ~/openshift-march-2024
+git pull
+cd Day3/declarative-scripts
+oc delete -f nginx-deploy.yml
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org declarative-scripts]$ ls
+nginx-deploy.yml
+  
+[jegan@tektutor.org declarative-scripts]$ oc delete -f nginx-deploy.yml 
+deployment.apps "nginx" deleted
+  
+[jegan@tektutor.org declarative-scripts]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+No resources found in jegan namespace.  
+</pre>
