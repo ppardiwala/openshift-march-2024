@@ -891,3 +891,26 @@ dns-default-hx5wk     2/2     Running   0          28h   10.129.0.38       maste
 dns-default-lbwl2     2/2     Running   0          28h   10.130.0.3        master-3.ocp.tektutor.org.labs   <none>           <none>
 dns-default-vb465     2/2     Running   0          28h   10.131.0.3        worker-2.ocp.tektutor.org.labs   <none>           <none><
 [jegan@tektutor.org openshift-march-2024]
+
+The kubelet container agent, configures the /etc/resolv.conf in every Pod as shown below
+```
+oc rsh pod/test-pod
+cat /etc/resolv.conf
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc rsh pod/test-pod
+sh-4.4# 
+sh-4.4# cat /etc/resolv.conf
+search jegan.svc.cluster.local svc.cluster.local cluster.local ocp.tektutor.org.labs
+nameserver 172.30.0.10
+options ndots:5
+sh-4.4# 
+sh-4.4# exit
+exit
+  
+[jegan@tektutor.org openshift-march-2024]$ oc get svc -n openshift-dns
+NAME          TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                  AGE
+dns-default   ClusterIP   172.30.0.10   <none>        53/UDP,53/TCP,9154/TCP   28h
+</pre>
