@@ -491,6 +491,27 @@ $ exit
 
 Reference - https://docs.openshift.com/container-platform/4.14/storage/persistent_storage/persistent-storage-nfs.html
 
+Check the boolean status
+```
+[root@master-1 /]# getsebool -a | grep nfs
+cobbler_use_nfs --> off
+colord_use_nfs --> off
+conman_use_nfs --> off
+ftpd_use_nfs --> off
+git_cgi_use_nfs --> off
+git_system_use_nfs --> off
+httpd_use_nfs --> off
+ksmtuned_use_nfs --> off
+logrotate_use_nfs --> off
+mpd_use_nfs --> off
+nagios_use_nfs --> off
+nfs_export_all_ro --> on
+nfs_export_all_rw --> on
+nfsd_anon_write --> off
+openshift_use_nfs --> off
+polipo_use_nfs --> off
+```
+
 In case your Pods are unable to mount NFS shared folder, you need to enable nfs mounting within Openshift nodes as shown below
 
 ```
