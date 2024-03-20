@@ -27,7 +27,7 @@ spec:
           mountPath: /bitnami/wordpress
         env:
         - name: MYSQL_CLIENT_DATABASE_HOST
-          value: mysql 
+          value: mariadb 
 
         - name: MYSQL_CLIENT_DATABASE_ROOT_USER
           value: root
@@ -42,7 +42,7 @@ spec:
           value: wordpress
 
         - name: WORDPRESS_DATABASE_HOST
-          value: mysql 
+          value: mariadb 
 
         - name: WORDPRESS_DATABASE_PORT_NUMBER
           value: "3306"

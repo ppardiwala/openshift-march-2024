@@ -720,3 +720,21 @@ e1b4843e90128       quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:ac59d6
 [root@worker-1 /]# crictl ps -a | grep wordpress
 cbdf81deaa10b       cd08464f8e6e5145736152e423985a40b51dad242b9f407192fe76ff64d737a6                                                         23 minutes ago      Running             wordpress                            0                   62e243d3ab13d       wordpress-658fc8c5b9-2mqwr  
 </pre>
+
+
+## Lab - Deploying wordpress and mysql multi-pod application that uses Persistent volumes
+```
+cd ~/openshift-march-2024
+git pull
+cd Day2/wordpress
+
+oc apply -f mariadb-pv.yml
+oc apply -f mariadb-pvc.yml
+oc apply -f mariadb-deploy.yml
+oc apply -f mariadb-svc.yml
+
+oc apply -f wordpress-pv.yml
+oc apply -f wordpress-pvc.yml
+oc apply -f wordpress-deploy.yml
+oc apply -f wordpress-route.yml
+```
