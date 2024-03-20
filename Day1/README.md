@@ -247,6 +247,7 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 - Declarative style is recommended over the imperative style
 
 ## Red Hat OpenShift High-Level Architecture
+![Red Hat Openshift Architecture](openshift-architecture.png)
 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
