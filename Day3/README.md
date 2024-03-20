@@ -15,3 +15,10 @@
     - its supports creating deployment in imperative and declarative style
     - in new version of K8s and OpenShift, it is recommended to use Deployment over the DeploymentConfig
   - ReplicationController and Deploymentconfig are deprecated but exists for backward compatibility
+
+## Installing Helm Kubernetes/OpenShift Package Manager
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
