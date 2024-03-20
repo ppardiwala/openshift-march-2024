@@ -50,6 +50,9 @@
   - CRI-O
   - rkt (pronounced as Rocket)
 
+## Docker - High Level Architecture
+![Docker Architecture](DockerHighLevelArchitecture.png)
+
 ## What is Container Orchestration Platform?
 - manages the containerized application workloads
 - has one or more servers ( cluster )
@@ -242,6 +245,8 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 - imperative style involves just commands to deploy,undeploy, scale up/down, rolling update etc
 - declarative styles requires writing manifest files(yaml/json) files, ie converting everything into source code which can be pushed to version control like GitHub, BitBucket, GitLab, etc.,
 - Declarative style is recommended over the imperative style
+
+## Red Hat OpenShift High-Level Architecture
 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
