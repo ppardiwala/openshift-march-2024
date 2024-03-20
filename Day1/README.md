@@ -248,7 +248,7 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 
 ## Red Hat OpenShift High-Level Architecture
 ![Red Hat Openshift Architecture](openshift-architecture.png)
-![Red Hat Openshift Architecture](openshift-architecture2.png)
+![Red Hat Openshift Architecture](openshift-architecture-2.png)
 
 ## Lab - Listing all nodes in the OpenShift cluster
 ```
