@@ -176,6 +176,9 @@ Events:            <none>
 </pre>
 
 ## Lab - Deploying an application from CLI using source strategy
+You can use any container image that suits your application from the Red Hat Container Image portal
+https://catalog.redhat.com/software/containers/search
+
 ```
 oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/tektutor/spring-ms.git --strategy=source
 ```
