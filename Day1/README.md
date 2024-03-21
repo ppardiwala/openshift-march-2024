@@ -1,20 +1,21 @@
 # Day 1
 
-## Docker Overview
+## Info - Docker Overview
 - comes in 2 flavors
   - Community Edition - Docker CE
   - Enterpise Edition - Docker EE
 - written in Go language
-- Developed and maintained by an organization called Docker Inc
+- developed and maintained by an organization called Docker Inc
 - Client/Server architecture
 - Client tool - docker
 - Server tool - runs a service in Linux/Windows/Mac
 - Registries
   - this is where all docker images are cached
-- Docker Image
+
+## Info - Docker Image
   - is a blueprint of Docker container
-  - 
-- docker container
+
+## Info - docker container
   - it is an application process that runs in a separate unix namespace
   - though it looks like a virtual machine or a OS, it is technically just an application process
   - containers gets its own network stack, it own file system
@@ -25,27 +26,28 @@
   - containers running on the same system/os shares the Hardwares resources available on the OS they are running
   - containers will depend on the OS Kernel on which they are running
 
-## Linux Kernel Container Features
+## Info - Linux Kernel Container Features
 - Namespace
   - allows to isolate one container from rest of the other containers
+
 - Control Groups (CGroups)
   - let's you apply some resource quota restricts like
     - restrict how many cpu cores a particular container can utilize
     - restrict how much RAM a particular container at the max can utilize
-    - restric how much storage a particular container at the max can utilize
+    - restrict how much storage a particular container at the max can utilize
 
-## What is a Container Engine?
+## Info - What is a Container Engine?
 - a high-level software that depends on Container Runtime to manage container images and containers
 - it offers user-friendly commands to manage images and containers but it depends on Container Runtimes to do that under the hood
-- examples
+- Examples
   - Docker depends on containerd which internally uses runC container Runtime
   - Podman depends on CRI-O Container Runtime to manage images and containers
 
-## What is a Container Runtime?
+## Info - What is a Container Runtime?
 - low-level software that know how to manage container images and containers
 - it is not so user-friendly, hence normally end-users like us wouldn't use container runtime directly
 - end-user will be using Container Engine not the Container runtime
-- Exmaples
+- Examples
   - runC
   - CRI-O
   - rkt (pronounced as Rocket)
@@ -53,7 +55,7 @@
 ## Docker - High Level Architecture
 ![Docker Architecture](DockerHighLevelArchitecture.png)
 
-## What is Container Orchestration Platform?
+## Info - What is Container Orchestration Platform?
 - manages the containerized application workloads
 - has one or more servers ( cluster )
 - most popular features that are supported by any Container Orchestration Platform
@@ -68,7 +70,7 @@
   - Kubernetes
   - Red Hat OpenShift
  
-## What is Docker SWARM?
+## Info - What is Docker SWARM?
 - it is an Orchestration platfrom from Docker Inc organization
 - it is open-source
 - it is not production-grade
@@ -101,7 +103,6 @@
 - Openshift also support CI/CD
 - OpenShift is capable of building an application from source code and deploy that as containized workloads within OpenShift
 - nodes can be a physical server with either RedHat Enterprise Linux installed on RedHat Enterprise Linux Core OS
-
 - supports two types of nodes
   - master nodes
     - this is where Control plane components will be running
