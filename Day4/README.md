@@ -330,5 +330,42 @@ oc get svc
 oc expose svc/spring-ms
 oc get route
 ```
-
 Access the route url from the Webconsole -> Developer context --> Topology
+
+## Lab - Deploying an application from a Custom Docker Image from Docker Hub
+```
+oc new-app --image=tektutor/spring-ms:1.0
+oc get svc
+oc expose svc/spring-ms
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app --image=tektutor/spring-ms:1.0
+--> Found container image 9175b94 (19 months old) from Docker Hub for "tektutor/spring-ms:1.0"
+
+    * An image stream tag will be created as "spring-ms:1.0" that will track this image
+
+--> Creating resources ...
+    imagestream.image.openshift.io "spring-ms" created
+    deployment.apps "spring-ms" created
+    service "spring-ms" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/spring-ms' 
+    Run 'oc status' to view your app.
+	
+[jegan@tektutor.org spring-ms]$ oc get svc
+NAME        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+spring-ms   ClusterIP   172.30.238.230   <none>        8080/TCP   13s
+	
+[jegan@tektutor.org spring-ms]$ oc expose svc/spring-ms
+route.route.openshift.io/spring-ms exposed
+	
+[jegan@tektutor.org spring-ms]$ oc get route
+NAME        HOST/PORT                                    PATH   SERVICES    PORT       TERMINATION   WILDCARD
+spring-ms   spring-ms-jegan.apps.ocp.tektutor.org.labs          spring-ms   8080-tcp                 None
+	
+[jegan@tektutor.org spring-ms]$ curl spring-ms-jegan.apps.ocp.tektutor.org.labs
+Greetings from Spring Boot!	
+</pre>
