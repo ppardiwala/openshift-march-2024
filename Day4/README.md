@@ -222,3 +222,113 @@ oc get route
 ```
 
 Now from the webconsole --> Developer context -> topology you can click on the route link(arrow point upward) to access the route public url to see the web page.
+
+
+## Lab - Deploying an appliction from github using Docker strategy from CLI
+```
+oc new-app https://github.com/tektutor/spring-ms.git --strategy=docker
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app https://github.com/tektutor/spring-ms.git --strategy=docker
+--> Found container image a6b53e1 (4 weeks old) from registry.access.redhat.com for "registry.access.redhat.com/ubi8/openjdk-11"
+
+    Java Applications 
+    ----------------- 
+    Platform for building and running plain Java applications (fat-jar and flat classpath)
+
+    Tags: builder, java
+
+    * An image stream tag will be created as "openjdk-11:latest" that will track the source image
+    * A Docker build using source code from https://github.com/tektutor/spring-ms.git will be created
+      * The resulting image will be pushed to image stream tag "spring-ms:latest"
+      * Every time "openjdk-11:latest" changes a new build will be triggered
+
+--> Creating resources ...
+    imagestream.image.openshift.io "openjdk-11" created
+    imagestream.image.openshift.io "spring-ms" created
+    buildconfig.build.openshift.io "spring-ms" created
+    deployment.apps "spring-ms" created
+    service "spring-ms" created
+--> Success
+    Build scheduled, use 'oc logs -f buildconfig/spring-ms' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/spring-ms' 
+    Run 'oc status' to view your app.  
+</pre>
+
+You can check the application build progress as shown below
+```
+oc logs -f bc/spring-ms
+```
+
+Expected output
+<pre>
+jegan@tektutor.org spring-ms]$ oc logs -f bc/spring-ms
+Cloning "https://github.com/tektutor/spring-ms.git" ...
+	Commit:	82552fb8a8eb3a7cc7e8165b8878dc5e47e50db3 (Renamed deploy.yml to deploy.yaml)
+	Author:	Jeganathan Swaminathan <mail2jegan@gmail.com>
+	Date:	Wed Feb 15 15:11:17 2023 +0530
+Replaced Dockerfile FROM image registry.access.redhat.com/ubi8/openjdk-11
+time="2024-03-21T11:33:49Z" level=info msg="Not using native diff for overlay, this may cause degraded performance for building images: kernel has CONFIG_OVERLAY_FS_REDIRECT_DIR enabled"
+I0321 11:33:49.342803       1 defaults.go:112] Defaulting to storage driver "overlay" with options [mountopt=metacopy=on].
+Caching blobs under "/var/cache/blobs".
+
+Pulling image docker.io/maven:3.6.3-jdk-11 ...
+Trying to pull docker.io/library/maven:3.6.3-jdk-11...
+Getting image source signatures
+Copying blob sha256:6c215442f70bd949a6f2e8092549943905e2d4f9c87a4f532d7740ae8647d33a
+Copying blob sha256:5d6f1e8117dbb1c6a57603cb4f321a861a08105a81bcc6b01b0ec2b78c8523a5
+Copying blob sha256:234b70d0479d7f16d7ee8d04e4ffdacc57d7d14313faf59d332f18b2e9418743
+Copying blob sha256:004f1eed87df3f75f5e2a1a649fa7edd7f713d1300532fd0909bb39cd48437d7
+Copying blob sha256:48c2faf66abec3dce9f54d6722ff592fce6dd4fb58a0d0b72282936c6598a3b3
+Copying blob sha256:d7eb6c022a4e6128219b32a8e07c8c22c89624ff440ebac1506121794bc15ccc
+Copying blob sha256:355e8215390faee903502a9fddfc65cd823f1606f053376ba2575adce66974a1
+Copying blob sha256:cf5eb43522f68d7e2347e19ad70dadcf1594d25b792ede0464c2936ff902c4c6
+Copying blob sha256:4fee0489a65b64056f81358639bfe85fd87776630830fd02ce8c15e34928bf9c
+Copying blob sha256:413646e6fa5d7bcd9722d3e400fc080a77deb505baed79afa5fedae23583af25
+Copying config sha256:e23b595c92ada5c9f20a27d547ed980a445f644eb1cbde7cfb27478fa38c4691
+Writing manifest to image destination
+
+Pulling image registry.access.redhat.com/ubi8/openjdk-11@sha256:45cd320e359633795b9166e397c2b07e186b7fec7f6dacce3c52ecab8cba8023 ...
+Trying to pull registry.access.redhat.com/ubi8/openjdk-11@sha256:45cd320e359633795b9166e397c2b07e186b7fec7f6dacce3c52ecab8cba8023...
+Getting image source signatures
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+Copying config sha256:a6b53e10c7678edc1d2e8090ed0a0b40d147f8e110ac2277931828ef11276f96
+Writing manifest to image destination
+Adding transient rw bind mount for /run/secrets/rhsm
+[1/2] STEP 1/3: FROM docker.io/maven:3.6.3-jdk-11 AS stage1
+[1/2] STEP 2/3: COPY . .
+--> 5ed50734e87f
+[1/2] STEP 3/3: RUN mvn clean package
+[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.4.2/spring-boot-starter-parent-2.4.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.4.2/spring-boot-starter-parent-2.4.2.pom (8.6 kB at 20 kB/s)
+
+[2/2] STEP 6/6: LABEL "io.openshift.build.commit.author"="Jeganathan Swaminathan <mail2jegan@gmail.com>" "io.openshift.build.commit.date"="Wed Feb 15 15:11:17 2023 +0530" "io.openshift.build.commit.id"="82552fb8a8eb3a7cc7e8165b8878dc5e47e50db3" "io.openshift.build.commit.message"="Renamed deploy.yml to deploy.yaml" "io.openshift.build.commit.ref"="master" "io.openshift.build.name"="spring-ms-1" "io.openshift.build.namespace"="jegan" "io.openshift.build.source-location"="https://github.com/tektutor/spring-ms.git"
+[2/2] COMMIT temp.builder.openshift.io/jegan/spring-ms-1:565d9d19
+--> 5148c0e02824
+Successfully tagged temp.builder.openshift.io/jegan/spring-ms-1:565d9d19
+5148c0e02824b36eb1a1f4ae90898cd7c0f3391babf8330ba2a5cd8682220af7
+
+Pushing image image-registry.openshift-image-registry.svc:5000/jegan/spring-ms:latest ...
+Getting image source signatures
+Copying blob sha256:4328970bb17139aa835c745ad0d72072f5b4721c3da9ca602f772c39453e5bc8
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+Copying config sha256:5148c0e02824b36eb1a1f4ae90898cd7c0f3391babf8330ba2a5cd8682220af7
+Writing manifest to image destination
+Successfully pushed image-registry.openshift-image-registry.svc:5000/jegan/spring-ms@sha256:1c8742b631b1ddaf8ad5508dc5a0855684212e1bc12baf2f711da4cd94d099cd
+Push successful
+</pre>
+
+You need to create a route
+```
+oc get svc
+oc expose svc/spring-ms
+oc get route
+```
+
+Access the route url from the Webconsole -> Developer context --> Topology
