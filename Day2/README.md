@@ -491,6 +491,14 @@ $ exit
 
 Reference - https://docs.openshift.com/container-platform/4.14/storage/persistent_storage/persistent-storage-nfs.html
 
+On the NFS Server machine, open up nfs ports
+```
+firewall-cmd --permanent --add-service={nfs,rpc-bind,mountd}
+firewall-cmd --permanent --add-port=2049/udp
+firewall-cmd --permanent --add-port=2049/tcp
+firewall-cmd --reload
+```
+
 Check the boolean status
 ```
 [root@master-1 /]# getsebool -a | grep nfs
