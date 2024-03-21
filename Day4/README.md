@@ -1,5 +1,9 @@
 # Day 4
 
+## Reference
+Red Hat Openshift also supports adding Windows Virtual Machines (nodes) into the Openshift cluster
+https://docs.openshift.com/container-platform/4.8/windows_containers/understanding-windows-container-workloads.html#understanding-windows-container-workloads
+
 ## Lab - Creating an NFS Storage Class 
 
 ```
