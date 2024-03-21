@@ -7,7 +7,7 @@ spec:
     matchLabels:
       name: jegan # Replace 'jegan' with your name
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   volumeMode: Filesystem
   resources:
     requests:
