@@ -174,3 +174,42 @@ Endpoints:         10.128.0.68:5000
 Session Affinity:  None
 Events:            <none>
 </pre>
+
+## Lab - Deploying an application from CLI using source strategy
+```
+oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/tektutor/spring-ms.git --strategy=source
+```
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/tektutor/spring-ms.git --strategy=source
+--> Found container image a6b53e1 (4 weeks old) from registry.access.redhat.com for "registry.access.redhat.com/ubi8/openjdk-11"
+
+    Java Applications 
+    ----------------- 
+    Platform for building and running plain Java applications (fat-jar and flat classpath)
+
+    Tags: builder, java
+
+    * An image stream tag will be created as "openjdk-11:latest" that will track the source image
+    * A source build using source code from https://github.com/tektutor/spring-ms.git will be created
+      * The resulting image will be pushed to image stream tag "spring-ms:latest"
+      * Every time "openjdk-11:latest" changes a new build will be triggered
+
+--> Creating resources ...
+    imagestream.image.openshift.io "openjdk-11" created
+    imagestream.image.openshift.io "spring-ms" created
+    buildconfig.build.openshift.io "spring-ms" created
+    deployment.apps "spring-ms" created
+    service "spring-ms" created
+--> Success
+    Build scheduled, use 'oc logs -f buildconfig/spring-ms' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/spring-ms' 
+    Run 'oc status' to view your app.  
+</pre>
+
+
+You may check the logs as shown below
+```
+oc logs -f bc/spring-ms
+```
