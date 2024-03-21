@@ -491,32 +491,76 @@ $ exit
 
 Reference - https://docs.openshift.com/container-platform/4.14/storage/persistent_storage/persistent-storage-nfs.html
 
+On the NFS Server machine, open up nfs ports
+```
+firewall-cmd --permanent --add-service={nfs,rpc-bind,mountd}
+firewall-cmd --permanent --add-port=2049/udp
+firewall-cmd --permanent --add-port=2049/tcp
+firewall-cmd --reload
+```
+
+Check the boolean status
+```
+[root@master-1 /]# getsebool -a | grep nfs
+cobbler_use_nfs --> off
+colord_use_nfs --> off
+conman_use_nfs --> off
+ftpd_use_nfs --> off
+git_cgi_use_nfs --> off
+git_system_use_nfs --> off
+httpd_use_nfs --> off
+ksmtuned_use_nfs --> off
+logrotate_use_nfs --> off
+mpd_use_nfs --> off
+nagios_use_nfs --> off
+nfs_export_all_ro --> on
+nfs_export_all_rw --> on
+nfsd_anon_write --> off
+openshift_use_nfs --> off
+polipo_use_nfs --> off
+```
+
 In case your Pods are unable to mount NFS shared folder, you need to enable nfs mounting within Openshift nodes as shown below
 
 ```
 oc debug node/master-1.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/master-2.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/master-3.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/worker-1.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/worker-2.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 ```
 
@@ -539,6 +583,12 @@ exit
 Removing debug pod ...
 Temporary namespace openshift-debug-7zzkh was removed.
 </pre>
+
+Try to mount the NFS shared folder manually from one of the OpenShift nodes
+```
+mount -vvv -t nfs 192.168.1.127:/var/nfs/jegan/mariadb /tmp
+umount -vvv -t nfs 192.168.1.127:/var/nfs/jegan/mariadb /tmp
+```
 
 ## Info - In case you are curious to see the containers running inside openshift nodes
 ```
