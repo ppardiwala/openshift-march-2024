@@ -526,26 +526,41 @@ In case your Pods are unable to mount NFS shared folder, you need to enable nfs 
 oc debug node/master-1.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/master-2.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/master-3.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/worker-1.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 
 oc debug node/worker-2.ocp4.training.tektutor
 chroot /host /bin/bash
 setsebool -P virt_use_nfs 1
+setsebool -P openshift_use_nfs 1
+setsebool -P mpd_use_nfs 1
+setsebool -P nfsd_anon_write 1
 exit
 ```
 
