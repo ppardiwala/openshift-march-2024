@@ -129,3 +129,48 @@ oc label node worker-2.ocp.tektutor.org.labs disk-
 ```
 https://github.com/tektutor/spring-ms
 ```
+
+## Lab - Finding the OpenShift Private Image Registry 
+```
+oc get po --all-namespaces | grep registry
+
+oc get svc -n openshift-image-registry
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc get po --all-namespaces | grep registry
+openshift-image-registry                           cluster-image-registry-operator-7b4979cf68-v7kqv                1/1     Running     0             11h
+openshift-image-registry                           image-pruner-28516320-8t9mt                                     0/1     Completed   0             10h
+openshift-image-registry                           image-registry-75d695567f-ghvfc                                 1/1     Running     0             11h
+openshift-image-registry                           node-ca-6s95s                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-gn9lt                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-gw454                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-jtxp5                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-tg4bx                                                   1/1     Running     0             11h
+  
+[jegan@tektutor.org spring-ms]$ oc get svc -n openshift-image-registry
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+image-registry            ClusterIP   172.30.89.109   <none>        5000/TCP    11h
+image-registry-operator   ClusterIP   None            <none>        60000/TCP   11h
+[jegan@tektutor.org spring-ms]$ 
+[jegan@tektutor.org spring-ms]$ oc describe svc/image-registry -n openshift-image-registry
+Name:              image-registry
+Namespace:         openshift-image-registry
+Labels:            docker-registry=default
+Annotations:       imageregistry.operator.openshift.io/checksum: sha256:1c19715a76014ae1d56140d6390a08f14f453c1a59dc36c15718f40c638ef63d
+                   service.alpha.openshift.io/serving-cert-secret-name: image-registry-tls
+                   service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710977180
+                   service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710977180
+Selector:          docker-registry=default
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                172.30.89.109
+IPs:               172.30.89.109
+Port:              5000-tcp  5000/TCP
+TargetPort:        5000/TCP
+Endpoints:         10.128.0.68:5000
+Session Affinity:  None
+Events:            <none>
+</pre>
