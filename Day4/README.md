@@ -124,3 +124,8 @@ Finally, let's clean up the pod
 oc delete -f required-affinity.yml
 oc label node worker-2.ocp.tektutor.org.labs disk-
 ```
+
+## Lab - Deploy custom spring-boot application from source code into OpenShift cluster
+```
+https://github.com/tektutor/spring-ms
+```
