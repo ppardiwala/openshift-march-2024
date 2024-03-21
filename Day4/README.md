@@ -211,7 +211,6 @@ Expected output
     Run 'oc status' to view your app.  
 </pre>
 
-
 You may check the logs as shown below
 ```
 oc logs -f bc/spring-ms
@@ -372,3 +371,36 @@ spring-ms   spring-ms-jegan.apps.ocp.tektutor.org.labs          spring-ms   8080
 [jegan@tektutor.org spring-ms]$ curl spring-ms-jegan.apps.ocp.tektutor.org.labs
 Greetings from Spring Boot!	
 </pre>
+
+## Lab - Create an edge route (https based public route url)
+
+Find your base domain of your openshift cluster
+```
+oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+```
+
+Expected output
+<pre>
+[root@tektutor.org auth]# oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+apps.ocp.tektutor.org.labs	
+</pre>
+
+Install the openssl from source code
+```
+sudo yum groupinstall 'Development Tools'
+sudo yum install perl-IPC-Cmd perl-Test-Simple
+cd /usr/src
+wget https://www.openssl.org/source/openssl-3.0.0.tar.gz
+tar -zxf openssl-3.0.0.tar.gz
+rm openssl-3.0.0.tar.gz
+dnf install perl
+cd /usr/src/openssl-3.0.0
+./config
+make
+make test
+make install
+ln -s /usr/local/lib64/libssl.so.3 /usr/lib64/libssl.so.3
+ln -s /usr/local/lib64/libcrypto.so.3 /usr/lib64/libcrypto.so.3
+openssl version
+```
+
