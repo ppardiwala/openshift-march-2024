@@ -213,3 +213,12 @@ You may check the logs as shown below
 ```
 oc logs -f bc/spring-ms
 ```
+
+You need to create a route
+```
+oc get svc
+oc expose svc/spring-ms
+oc get route
+```
+
+Now from the webconsole --> Developer context -> topology you can click on the route link(arrow point upward) to access the route public url to see the web page.
