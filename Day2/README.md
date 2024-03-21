@@ -584,6 +584,12 @@ Removing debug pod ...
 Temporary namespace openshift-debug-7zzkh was removed.
 </pre>
 
+Try to mount the NFS shared folder manually from one of the OpenShift nodes
+```
+mount -vvv -t nfs 192.168.1.127:/var/nfs/jegan/mariadb /tmp
+umount -vvv -t nfs 192.168.1.127:/var/nfs/jegan/mariadb /tmp
+```
+
 ## Info - In case you are curious to see the containers running inside openshift nodes
 ```
 oc debug node/worker-1.ocp4.training.tektutor
