@@ -162,6 +162,8 @@ f61c43e793f6: Pushed
 
 Let's try deploying our hello-microservice applicaton into Openshift using the image we pushed into your JFrog Artifactory
 ```
+oc new-app --image=tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+oc get po 
 ```
 
 Expected output
