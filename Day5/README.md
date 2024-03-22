@@ -59,7 +59,7 @@ drwxr-xr-x. 3 jegan jegan   18 Mar 21 19:44 src
 
     
 [jegan@tektutor.org spring-ms]$ # Build custom docker image with sample spring boot microservice
-[jegan@tektutor.org spring-ms]$ docker build -t tektutor/hello-microservice:1.0 .
+[jegan@tektutor.org spring-ms]$ <b>docker build -t tektutor/hello-microservice:1.0 .</b>
 [+] Building 2.3s (11/11) FINISHED                                                               docker:default
  => [internal] load build definition from Dockerfile                                                       0.0s
  => => transferring dockerfile: 315B                                                                       0.0s
@@ -80,16 +80,16 @@ drwxr-xr-x. 3 jegan jegan   18 Mar 21 19:44 src
  => => naming to docker.io/tektutor/hello-microservice:1.0     
   0.0s
   
-[jegan@tektutor.org spring-ms]$ docker images
+[jegan@tektutor.org spring-ms]$ <b>docker images</b>
 REPOSITORY                                      TAG       IMAGE ID       CREATED         SIZE
 tektutor/hello-microservice                     1.0       ec169bcd0658   15 hours ago    410MB
 tektutor.jfrog.io/tektutor-docker/hello-world   1.0.0     d2c94e258dcb   10 months ago   13.3kB
 tektutor.jfrog.io/tektutor-docker/hello-world   latest    d2c94e258dcb   10 months ago   13.3kB
   
-[jegan@tektutor.org spring-ms]$ docker run -d --name hello --hostname hello -p 80:8080 tektutor/hello-microservice:1.0 
+[jegan@tektutor.org spring-ms]$ <b>docker run -d --name hello --hostname hello -p 80:8080 tektutor/hello-microservice:1.0</b>
 bc4bea9f0f746b490650d444842fde6d69c4f84132cbd2c8ed4d3171ff8ced69
   
-[jegan@tektutor.org spring-ms]$ docker ps
+[jegan@tektutor.org spring-ms]$ <b>docker ps</b>
 CONTAINER ID   IMAGE                             COMMAND               CREATED        STATUS        PORTS                                                       NAMES
 bc4bea9f0f74   tektutor/hello-microservice:1.0   "java -jar app.jar"   1 second ago   Up 1 second   8443/tcp, 8778/tcp, 0.0.0.0:80->8080/tcp, :::80->8080/tcp   hello
 [jegan@tektutor.org spring-ms]$ curl localhost
