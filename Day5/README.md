@@ -1,9 +1,12 @@
 # Day 5
 
 ## References
-
 About Parent Devfile
 https://registry.devfile.io/viewer/devfiles/community/java-springboot?devfile-version=1.2.0
+
+## Lab - Setup your own JFrog Artifactory Enterprise server 
+![JFrog](jfrog-1.png)
+![JFrog](jfrog-2.png)
 
 ## Lab - JFrog Private Docker Registry (Quick Test once you setup your JFrog Private Docker Registry)
 ```
