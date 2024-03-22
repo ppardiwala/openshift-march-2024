@@ -291,3 +291,25 @@ spec:
           ports:
           - containerPort: 80
 ```
+
+## Lab - BuildConfig - build container image cloning source code from GitHub repository
+```
+cd ~/openshift-march-2024
+git pull
+
+cd Day5/BuildConfig
+oc apply -f imagestream.yml
+oc get imagestreams
+oc get imagestream
+oc get is
+
+oc apply -f buildconfig.yml
+oc get buildconfigs
+oc get buildconfig
+oc get bc
+
+oc get builds
+oc get build
+
+oc logs -f bc/spring-hello
+```
