@@ -7,10 +7,19 @@ https://registry.devfile.io/viewer/devfiles/community/java-springboot?devfile-ve
 ## Lab - Setup your own JFrog Artifactory Enterprise server 
 
 On your Web browser, navigate to the below url
+<pre>
 https://jfrog.com/artifactory/enterprise-getting-started/
+</pre>
+
 Expected output
+<pre>
 ![JFrog](jfrog-1.png)
+</pre>
 Click on "Start Free" button in the top right corner of the web page to get the below page
+<pre>
+![JFrog](jfrog-3.png)
+</pre>
+Click on Google to get the below page
 ![JFrog](jfrog-2.png)
 
 ## Lab - JFrog Private Docker Registry (Quick Test once you setup your JFrog Private Docker Registry)
