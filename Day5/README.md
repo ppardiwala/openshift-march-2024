@@ -313,3 +313,144 @@ oc get build
 
 oc logs -f bc/spring-hello
 ```
+
+Expected output
+<pre>
+jegan@tektutor.org BuildConfig]$ oc new-project jegan
+Already on project "jegan" on server "https://api.ocp.tektutor.org.labs:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[jegan@tektutor.org BuildConfig]$ pwd
+/home/jegan/openshift-march-2024/Day5/BuildConfig
+  
+[jegan@tektutor.org BuildConfig]$ ls -l
+total 16
+-rw-r--r--. 1 jegan jegan  408 Mar 22 15:40 buildconfig.yml
+-rw-r--r--. 1 jegan jegan  217 Mar 22 15:46 Dockerfile
+-rw-r--r--. 1 jegan jegan  132 Mar 22 15:42 imagestream.yml
+-rw-r--r--. 1 jegan jegan 1715 Mar 22 15:46 pom.xml
+drwxr-xr-x. 3 jegan jegan   18 Mar 22 15:46 src
+  
+[jegan@tektutor.org BuildConfig]$ oc apply -f imagestream.yml 
+imagestream.image.openshift.io/tektutor-spring-hello created
+
+    
+[jegan@tektutor.org BuildConfig]$ oc get imagestreams
+NAME                    IMAGE REPOSITORY                                                               TAGS   UPDATED
+tektutor-spring-hello   image-registry.openshift-image-registry.svc:5000/jegan/tektutor-spring-hello          
+[jegan@tektutor.org BuildConfig]$ oc get imagestream
+NAME                    IMAGE REPOSITORY                                                               TAGS   UPDATED
+tektutor-spring-hello   image-registry.openshift-image-registry.svc:5000/jegan/tektutor-spring-hello          
+[jegan@tektutor.org BuildConfig]$ oc get is
+NAME                    IMAGE REPOSITORY                                                               TAGS   UPDATED
+tektutor-spring-hello   image-registry.openshift-image-registry.svc:5000/jegan/tektutor-spring-hello   
+</pre>
+
+Let's check the buildconfig output
+<pre>
+[jegan@tektutor.org BuildConfig]$ ls -l
+total 16
+-rw-r--r--. 1 jegan jegan  408 Mar 22 15:40 buildconfig.yml
+-rw-r--r--. 1 jegan jegan  217 Mar 22 15:46 Dockerfile
+-rw-r--r--. 1 jegan jegan  132 Mar 22 15:42 imagestream.yml
+-rw-r--r--. 1 jegan jegan 1715 Mar 22 15:46 pom.xml
+drwxr-xr-x. 3 jegan jegan   18 Mar 22 15:46 src
+[jegan@tektutor.org BuildConfig]$ oc apply -f buildconfig.yml 
+buildconfig.build.openshift.io/spring-hello created
+[jegan@tektutor.org BuildConfig]$ 
+[jegan@tektutor.org BuildConfig]$ 
+[jegan@tektutor.org BuildConfig]$ oc get buildconfigs
+NAME           TYPE     FROM   LATEST
+spring-hello   Docker   Git    1
+[jegan@tektutor.org BuildConfig]$ oc get buildconfig
+NAME           TYPE     FROM   LATEST
+spring-hello   Docker   Git    1
+[jegan@tektutor.org BuildConfig]$ oc get bc
+NAME           TYPE     FROM   LATEST
+spring-hello   Docker   Git    1
+[jegan@tektutor.org BuildConfig]$ oc get builds
+NAME             TYPE     FROM          STATUS    STARTED          DURATION
+spring-hello-1   Docker   Git@a94193c   Running   16 seconds ago   
+[jegan@tektutor.org BuildConfig]$ oc get build
+NAME             TYPE     FROM          STATUS    STARTED          DURATION
+spring-hello-1   Docker   Git@a94193c   Running   18 seconds ago   
+[jegan@tektutor.org BuildConfig]$ oc logs -f bc/spring-hello
+Cloning "https://github.com/tektutor/openshift-march-2024.git" ...
+	Commit:	a94193c53acf297b2a9848787ac258524f0b8e70 (Update README.md)
+	Author:	Jeganathan Swaminathan <mail2jegan@gmail.com>
+	Date:	Fri Mar 22 15:54:43 2024 +0530
+time="2024-03-22T10:28:21Z" level=info msg="Not using native diff for overlay, this may cause degraded performance for building images: kernel has CONFIG_OVERLAY_FS_REDIRECT_DIR enabled"
+I0322 10:28:21.340760       1 defaults.go:112] Defaulting to storage driver "overlay" with options [mountopt=metacopy=on].
+Caching blobs under "/var/cache/blobs".
+
+Pulling image docker.io/maven:3.6.3-jdk-11 ...
+Trying to pull docker.io/library/maven:3.6.3-jdk-11...
+Getting image source signatures
+Copying blob sha256:6c215442f70bd949a6f2e8092549943905e2d4f9c87a4f532d7740ae8647d33a
+Copying blob sha256:5d6f1e8117dbb1c6a57603cb4f321a861a08105a81bcc6b01b0ec2b78c8523a5
+Copying blob sha256:48c2faf66abec3dce9f54d6722ff592fce6dd4fb58a0d0b72282936c6598a3b3
+Copying blob sha256:234b70d0479d7f16d7ee8d04e4ffdacc57d7d14313faf59d332f18b2e9418743
+Copying blob sha256:004f1eed87df3f75f5e2a1a649fa7edd7f713d1300532fd0909bb39cd48437d7
+Copying blob sha256:d7eb6c022a4e6128219b32a8e07c8c22c89624ff440ebac1506121794bc15ccc
+Copying blob sha256:355e8215390faee903502a9fddfc65cd823f1606f053376ba2575adce66974a1
+Copying blob sha256:cf5eb43522f68d7e2347e19ad70dadcf1594d25b792ede0464c2936ff902c4c6
+Copying blob sha256:4fee0489a65b64056f81358639bfe85fd87776630830fd02ce8c15e34928bf9c
+Copying blob sha256:413646e6fa5d7bcd9722d3e400fc080a77deb505baed79afa5fedae23583af25
+Copying config sha256:e23b595c92ada5c9f20a27d547ed980a445f644eb1cbde7cfb27478fa38c4691
+Writing manifest to image destination
+
+Pulling image registry.access.redhat.com/ubi8/openjdk-11 ...
+Trying to pull registry.access.redhat.com/ubi8/openjdk-11:latest...
+Getting image source signatures
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+
+Copying blob sha256:48c2faf66abec3dce9f54d6722ff592fce6dd4fb58a0d0b72282936c6598a3b3
+Copying blob sha256:234b70d0479d7f16d7ee8d04e4ffdacc57d7d14313faf59d332f18b2e9418743
+Copying blob sha256:004f1eed87df3f75f5e2a1a649fa7edd7f713d1300532fd0909bb39cd48437d7
+Copying blob sha256:d7eb6c022a4e6128219b32a8e07c8c22c89624ff440ebac1506121794bc15ccc
+Copying blob sha256:355e8215390faee903502a9fddfc65cd823f1606f053376ba2575adce66974a1
+Copying blob sha256:cf5eb43522f68d7e2347e19ad70dadcf1594d25b792ede0464c2936ff902c4c6
+Copying blob sha256:4fee0489a65b64056f81358639bfe85fd87776630830fd02ce8c15e34928bf9c
+Copying blob sha256:413646e6fa5d7bcd9722d3e400fc080a77deb505baed79afa5fedae23583af25
+Copying config sha256:e23b595c92ada5c9f20a27d547ed980a445f644eb1cbde7cfb27478fa38c4691
+Writing manifest to image destination
+
+Pulling image registry.access.redhat.com/ubi8/openjdk-11 ...
+Trying to pull registry.access.redhat.com/ubi8/openjdk-11:latest...
+Getting image source signatures
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+Copying config sha256:a6b53e10c7678edc1d2e8090ed0a0b40d147f8e110ac2277931828ef11276f96
+Writing manifest to image destination
+Adding transient rw bind mount for /run/secrets/rhsm
+[1/2] STEP 1/3: FROM docker.io/maven:3.6.3-jdk-11 AS stage1
+[1/2] STEP 2/3: COPY . .
+--> c5264029e5f0
+[1/2] STEP 3/3: RUN mvn clean package
+[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.4.2/spring-boot-starter-parent-2.4.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.4.2/spring-boot-starter-parent-2.4.2.pom (8.6 kB at 24 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-dependencies/2.4.2/spring-boot-dependencies-2.4.2.pom
+[2/2] COMMIT temp.builder.openshift.io/jegan/spring-hello-1:7d550e00
+--> 0e87f95533d4
+Successfully tagged temp.builder.openshift.io/jegan/spring-hello-1:7d550e00
+0e87f95533d464ca205e5e8b3e0a6a1ca34be096cd0f43df0302acb433cf4e0a
+
+Pushing image image-registry.openshift-image-registry.svc:5000/jegan/tektutor-spring-hello:latest ...
+Getting image source signatures
+Copying blob sha256:8ffbb4d0fd9e01bfa5a94d0f565e8c1f4d95cd76df979fb01768e168e006d2ef
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying config sha256:0e87f95533d464ca205e5e8b3e0a6a1ca34be096cd0f43df0302acb433cf4e0a
+Writing manifest to image destination
+Successfully pushed image-registry.openshift-image-registry.svc:5000/jegan/tektutor-spring-hello@sha256:69cfb72162c69b3adc19a78ae63c793f8db2c7ded33b012b5e8c129d33f1b544
+Push successful  
+</pre>
