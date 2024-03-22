@@ -534,3 +534,10 @@ route.route.openshift.io/nginx created
 NAME    HOST/PORT                                        PATH   SERVICES   PORT    TERMINATION   WILDCARD
 nginx   nginx-jegan.apps.ocp.tektutor.org.labs          nginx      <all>   edge          None
 </pre>                                                                                                                                 
+
+## Post test link for Openshift training
+https://app.mymapit.in/code4/tiny/hpLlQw
+
+## Feedback link
+https://survey.zohopublic.com/zs/ZpD42A
+
