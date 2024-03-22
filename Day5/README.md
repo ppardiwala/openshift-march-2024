@@ -111,6 +111,38 @@ bc4bea9f0f74   tektutor/hello-microservice:1.0   "java -jar app.jar"   1 second 
 [jegan@tektutor.org spring-ms]$ curl localhost
 </pre>
 
+We need to tag the hello-microservice docker image as per your JFrog portal url
+```
+cd ~/openshift-march-2024
+git pull
+cd Day5/spring-ms
+pwd
+
+docker images
+docker tag tektutor/hello-microservice:1.0 tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+docker images
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ pwd
+/home/jegan/openshift-march-2024/Day5/spring-ms
+  
+[jegan@tektutor.org spring-ms]$ docker images
+REPOSITORY                                      TAG       IMAGE ID       CREATED         SIZE
+tektutor/hello-microservice                     1.0       ec169bcd0658   16 hours ago    410MB
+tektutor.jfrog.io/tektutor-docker/hello-world   1.0.0     d2c94e258dcb   10 months ago   13.3kB
+tektutor.jfrog.io/tektutor-docker/hello-world   latest    d2c94e258dcb   10 months ago   13.3kB
+  
+[jegan@tektutor.org spring-ms]$ docker tag tektutor/hello-microservice:1.0 tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+  
+[jegan@tektutor.org spring-ms]$ docker images
+REPOSITORY                                             TAG       IMAGE ID       CREATED         SIZE
+tektutor/hello-microservice                            1.0       ec169bcd0658   16 hours ago    410MB
+tektutor.jfrog.io/tektutor-docker/hello-microservice   1.0       ec169bcd0658   16 hours ago    410MB
+tektutor.jfrog.io/tektutor-docker/hello-world          1.0.0     d2c94e258dcb   10 months ago   13.3kB
+tektutor.jfrog.io/tektutor-docker/hello-world          latest    d2c94e258dcb   10 months ago   13.3kB  
+</pre>
 
 # Knative Serverless applications
 
