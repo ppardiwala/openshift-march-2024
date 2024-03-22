@@ -37,7 +37,11 @@ ac28800ec8bb: Layer already exists
 
 ## Lab - Building a Custom Docker Image and pushing to JFrog Private Docker Registry
 ```
-
+cd ~/openshift-march-2024
+git pull
+cd Day5/spring-ms
+docker build -t tektutor/hello-microservice:1.0 .
+docker images
 ```
 
 Expected output
