@@ -144,6 +144,22 @@ tektutor.jfrog.io/tektutor-docker/hello-world          1.0.0     d2c94e258dcb   
 tektutor.jfrog.io/tektutor-docker/hello-world          latest    d2c94e258dcb   10 months ago   13.3kB  
 </pre>
 
+Let's push this image to our JFrog Private Docker Registry as shown below
+```
+docker image
+docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+The push refers to repository [tektutor.jfrog.io/tektutor-docker/hello-microservice]
+191a955daa2f: Pushed 
+00a9cea1d198: Pushed 
+f61c43e793f6: Pushed 
+1.0: digest: sha256:04d0d1042191c75c68261d5017d1d10e0ef3f25f003f02916781b20ef6fb5704 size: 955  
+</pre>
+
 # Knative Serverless applications
 
 ## Info - What is OpenShiftServerless?
