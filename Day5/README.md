@@ -128,15 +128,15 @@ Expected output
 [jegan@tektutor.org spring-ms]$ pwd
 /home/jegan/openshift-march-2024/Day5/spring-ms
   
-[jegan@tektutor.org spring-ms]$ docker images
+[jegan@tektutor.org spring-ms]$ <b>docker images</b>
 REPOSITORY                                      TAG       IMAGE ID       CREATED         SIZE
 tektutor/hello-microservice                     1.0       ec169bcd0658   16 hours ago    410MB
 tektutor.jfrog.io/tektutor-docker/hello-world   1.0.0     d2c94e258dcb   10 months ago   13.3kB
 tektutor.jfrog.io/tektutor-docker/hello-world   latest    d2c94e258dcb   10 months ago   13.3kB
   
-[jegan@tektutor.org spring-ms]$ docker tag tektutor/hello-microservice:1.0 tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+[jegan@tektutor.org spring-ms]$ <b>docker tag tektutor/hello-microservice:1.0 tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0</b>
   
-[jegan@tektutor.org spring-ms]$ docker images
+[jegan@tektutor.org spring-ms]$ <b>docker images</b>
 REPOSITORY                                             TAG       IMAGE ID       CREATED         SIZE
 tektutor/hello-microservice                            1.0       ec169bcd0658   16 hours ago    410MB
 tektutor.jfrog.io/tektutor-docker/hello-microservice   1.0       ec169bcd0658   16 hours ago    410MB
@@ -152,7 +152,7 @@ docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
 
 Expected output
 <pre>
-[jegan@tektutor.org spring-ms]$ docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+[jegan@tektutor.org spring-ms]$ <b>docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0</b>
 The push refers to repository [tektutor.jfrog.io/tektutor-docker/hello-microservice]
 191a955daa2f: Pushed 
 00a9cea1d198: Pushed 
@@ -168,7 +168,7 @@ oc get po
 
 Expected output
 <pre>
-[jegan@tektutor.org spring-ms]$ oc new-app --image=tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+[jegan@tektutor.org spring-ms]$ <b>oc new-app --image=tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0</b>
 W0322 12:09:36.522032 3222928 newapp.go:523] Could not find an image stream match for "tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0". Make sure that a container image with that tag is available on the node for the deployment to succeed.
 --> Found container image ec169bc (16 hours old) from tektutor.jfrog.io for "tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0"
 
@@ -186,12 +186,69 @@ W0322 12:09:36.522032 3222928 newapp.go:523] Could not find an image stream matc
      'oc expose service/hello-microservice' 
     Run 'oc status' to view your app.
   
-[jegan@tektutor.org spring-ms]$ oc get po -w
+[jegan@tektutor.org spring-ms]$ <b>oc get po -w</b>
 NAME                                  READY   STATUS         RESTARTS   AGE
 hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull   0          12s
 hello-microservice-7dd969c847-6gvsg   0/1     ImagePullBackOff   0          17s
 hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull       0          31s  
 </pre>
+
+In order to download container image from our private JFrog Container Image registry, we need provide login credentials.  These login credentials we can save in a Openshift secret as shown below
+```
+oc create secret docker-registry private-jfrog-image-registry --docker-server=tektutor.jfrog.io --docker-username=<replace-this-with-your-jfrog-user-login> --docker-password=<replace-this-with-your-jfrog-access-token>
+
+oc get secrets
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]<b>oc get secrets</b>
+NAME                       TYPE                                  DATA   AGE
+builder-dockercfg-rsp4w    kubernetes.io/dockercfg               1      23m
+builder-token-vz2lv        kubernetes.io/service-account-token   4      23m
+default-dockercfg-fnztn    kubernetes.io/dockercfg               1      23m
+default-token-g2jbg        kubernetes.io/service-account-token   4      23m
+deployer-dockercfg-8tn5r   kubernetes.io/dockercfg               1      23m
+deployer-token-fkcfz       kubernetes.io/service-account-token   4      23m
+private-jfrog-image-registry    kubernetes.io/dockerconfigjson        1      8m5s  
+</pre>
+
+Now you may deploy the hello-microservice in declarative style as shown below
+```
+cd ~/openshift-march-2024
+git pull
+cd Day5/spring-ms
+oc apply -f hello-microservice-deploy.yml
+
+oc get po -w
+```
+
+Expected output
+<pre>
+jegan@tektutor.org spring-ms]$ ls
+Dockerfile  hello-microservice-deploy.yml  pom.xml  src
+[jegan@tektutor.org spring-ms]$ <b>oc apply -f hello-microservice-deploy.yml</b>
+deployment.apps/hello created
+  
+[jegan@tektutor.org spring-ms]$ <b>oc get po -w</b>
+NAME                     READY   STATUS              RESTARTS   AGE
+hello-7b548bfc5f-chzcn   0/1     ContainerCreating   0          3s
+hello-7b548bfc5f-ps872   0/1     ContainerCreating   0          3s
+hello-7b548bfc5f-twlnc   0/1     ContainerCreating   0          3s
+hello-7b548bfc5f-twlnc   1/1     Running             0          27s
+hello-7b548bfc5f-ps872   1/1     Running             0          28s
+
+[jegan@tektutor.org spring-ms]<b>oc get secrets</b>
+NAME                       TYPE                                  DATA   AGE
+builder-dockercfg-rsp4w    kubernetes.io/dockercfg               1      23m
+builder-token-vz2lv        kubernetes.io/service-account-token   4      23m
+default-dockercfg-fnztn    kubernetes.io/dockercfg               1      23m
+default-token-g2jbg        kubernetes.io/service-account-token   4      23m
+deployer-dockercfg-8tn5r   kubernetes.io/dockercfg               1      23m
+deployer-token-fkcfz       kubernetes.io/service-account-token   4      23m
+private-jfrog-image-registry    kubernetes.io/dockerconfigjson        1      8m5s  
+</pre>
+
 
 # Knative Serverless applications
 
