@@ -246,7 +246,7 @@ default-dockercfg-fnztn    kubernetes.io/dockercfg               1      23m
 default-token-g2jbg        kubernetes.io/service-account-token   4      23m
 deployer-dockercfg-8tn5r   kubernetes.io/dockercfg               1      23m
 deployer-token-fkcfz       kubernetes.io/service-account-token   4      23m
-private-docker-registry    kubernetes.io/dockerconfigjson        1      8m5s  
+private-jfrog-docker-registry    kubernetes.io/dockerconfigjson        1      8m5s  
 </pre>
 
 
