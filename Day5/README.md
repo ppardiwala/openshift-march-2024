@@ -160,6 +160,37 @@ f61c43e793f6: Pushed
 1.0: digest: sha256:04d0d1042191c75c68261d5017d1d10e0ef3f25f003f02916781b20ef6fb5704 size: 955  
 </pre>
 
+Let's try deploying our hello-microservice applicaton into Openshift using the image we pushed into your JFrog Artifactory
+```
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app --image=tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+W0322 12:09:36.522032 3222928 newapp.go:523] Could not find an image stream match for "tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0". Make sure that a container image with that tag is available on the node for the deployment to succeed.
+--> Found container image ec169bc (16 hours old) from tektutor.jfrog.io for "tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0"
+
+    Java Applications 
+    ----------------- 
+    Platform for building and running plain Java applications (fat-jar and flat classpath)
+
+    Tags: builder, java
+
+--> Creating resources ...
+    deployment.apps "hello-microservice" created
+    service "hello-microservice" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/hello-microservice' 
+    Run 'oc status' to view your app.
+  
+[jegan@tektutor.org spring-ms]$ oc get po -w
+NAME                                  READY   STATUS         RESTARTS   AGE
+hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull   0          12s
+hello-microservice-7dd969c847-6gvsg   0/1     ImagePullBackOff   0          17s
+hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull       0          31s  
+</pre>
+
 # Knative Serverless applications
 
 ## Info - What is OpenShiftServerless?
