@@ -51,20 +51,25 @@ docker images
 
 Expected output
 <pre>
-[jegan@tektutor.org spring-ms]$ ls
-Dockerfile  pom.xml  src
+[jegan@tektutor.org spring-ms]$ ls -l
+total 8
+-rw-r--r--. 1 jegan jegan  217 Mar 22 10:31 Dockerfile
+-rw-r--r--. 1 jegan jegan 1715 Mar 21 19:44 pom.xml
+drwxr-xr-x. 3 jegan jegan   18 Mar 21 19:44 src
 
+    
+[jegan@tektutor.org spring-ms]$ # Build custom docker image with sample spring boot microservice
 [jegan@tektutor.org spring-ms]$ docker build -t tektutor/hello-microservice:1.0 .
-[+] Building 2.0s (11/11) FINISHED                                                               docker:default
+[+] Building 2.3s (11/11) FINISHED                                                               docker:default
  => [internal] load build definition from Dockerfile                                                       0.0s
  => => transferring dockerfile: 315B                                                                       0.0s
- => [internal] load metadata for registry.access.redhat.com/ubi8/openjdk-11:latest                         0.7s
- => [internal] load metadata for docker.io/library/maven:3.6.3-jdk-11                                      1.9s
+ => [internal] load metadata for registry.access.redhat.com/ubi8/openjdk-11:latest                         0.8s
+ => [internal] load metadata for docker.io/library/maven:3.6.3-jdk-11                                      2.2s
  => [internal] load .dockerignore                                                                          0.0s
  => => transferring context: 2B                                                                            0.0s
  => [stage-1 1/2] FROM registry.access.redhat.com/ubi8/openjdk-11:latest@sha256:285b35387bd04f93bb2ad8a2d  0.0s
  => [internal] load build context                                                                          0.0s
- => => transferring context: 1.02kB                                                                        0.0s
+ => => transferring context: 1.25kB                                                                        0.0s
  => [stage1 1/3] FROM docker.io/library/maven:3.6.3-jdk-11@sha256:1d29ccf46ef2a5e64f7de3d79a63f9bcffb4dc5  0.0s
  => CACHED [stage1 2/3] COPY . .                                                                           0.0s
  => CACHED [stage1 3/3] RUN mvn clean package                                                              0.0s
@@ -72,7 +77,21 @@ Dockerfile  pom.xml  src
  => exporting to image                                                                                     0.0s
  => => exporting layers                                                                                    0.0s
  => => writing image sha256:ec169bcd065873433a41201a6141821e8e155dfea95e9c291592fefb2732c2af               0.0s
- => => naming to docker.io/tektutor/hello-microservice:1.0                                                 0.0s
+ => => naming to docker.io/tektutor/hello-microservice:1.0     
+  0.0s
+[jegan@tektutor.org spring-ms]$ docker images
+REPOSITORY                                      TAG       IMAGE ID       CREATED         SIZE
+tektutor/hello-microservice                     1.0       ec169bcd0658   15 hours ago    410MB
+tektutor.jfrog.io/tektutor-docker/hello-world   1.0.0     d2c94e258dcb   10 months ago   13.3kB
+tektutor.jfrog.io/tektutor-docker/hello-world   latest    d2c94e258dcb   10 months ago   13.3kB
+  
+[jegan@tektutor.org spring-ms]$ docker run -d --name hello --hostname hello -p 80:8080 tektutor/hello-microservice:1.0 
+bc4bea9f0f746b490650d444842fde6d69c4f84132cbd2c8ed4d3171ff8ced69
+  
+[jegan@tektutor.org spring-ms]$ docker ps
+CONTAINER ID   IMAGE                             COMMAND               CREATED        STATUS        PORTS                                                       NAMES
+bc4bea9f0f74   tektutor/hello-microservice:1.0   "java -jar app.jar"   1 second ago   Up 1 second   8443/tcp, 8778/tcp, 0.0.0.0:80->8080/tcp, :::80->8080/tcp   hello
+[jegan@tektutor.org spring-ms]$ curl localhost
 </pre>
 
 
