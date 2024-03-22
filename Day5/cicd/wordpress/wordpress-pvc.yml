@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wordpress-pvc
 spec:
-  storageclass: nfs
+  storageClassName: nfs
   accessModes:
   - ReadWriteMany
   volumeMode: Filesystem
