@@ -16,7 +16,7 @@ spec:
       volumes:
       - name: wordpress-storage
         persistentVolumeClaim:
-          claimName: wordpress-pvc-jegan # Replace 'jegan' with your name
+          claimName: wordpress-pvc
       containers:
       - image: bitnami/wordpress:6.4.1
         imagePullPolicy: IfNotPresent
