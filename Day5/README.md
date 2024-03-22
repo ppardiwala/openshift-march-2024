@@ -79,6 +79,7 @@ drwxr-xr-x. 3 jegan jegan   18 Mar 21 19:44 src
  => => writing image sha256:ec169bcd065873433a41201a6141821e8e155dfea95e9c291592fefb2732c2af               0.0s
  => => naming to docker.io/tektutor/hello-microservice:1.0     
   0.0s
+  
 [jegan@tektutor.org spring-ms]$ docker images
 REPOSITORY                                      TAG       IMAGE ID       CREATED         SIZE
 tektutor/hello-microservice                     1.0       ec169bcd0658   15 hours ago    410MB
