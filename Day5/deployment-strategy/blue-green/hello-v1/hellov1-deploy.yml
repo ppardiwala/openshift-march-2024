@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-v1
+    ver: "1.0"
+  name: hello-v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-v1
+      ver: "1.0"
+  template:
+    metadata:
+      labels:
+        app: hello-v1
+        ver: "1.0"
+    spec:
+      containers:
+      - image: tektutor/hello-microservice:v1 
+        name: hello 

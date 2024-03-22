@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: hello
+  name: hello
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: hello-v1
+    weight: 50
+  alternateBackends:
+  - kind: Service
+    name: hello-v2
+    weight: 50

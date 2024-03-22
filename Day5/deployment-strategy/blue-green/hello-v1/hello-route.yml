@@ -2,12 +2,12 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   labels:
-    app: wordpress
-  name: wordpress
+    app: hello
+  name: hello
 spec:
   port:
     targetPort: 8080
   to:
-    kind: ""
-    name: wordpress
+    kind: "Service"
+    name: hello-v1
     weight: null
