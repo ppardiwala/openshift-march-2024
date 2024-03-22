@@ -128,15 +128,15 @@ Expected output
 [jegan@tektutor.org spring-ms]$ pwd
 /home/jegan/openshift-march-2024/Day5/spring-ms
   
-[jegan@tektutor.org spring-ms]$ docker images
+[jegan@tektutor.org spring-ms]$ <b>docker images</b>
 REPOSITORY                                      TAG       IMAGE ID       CREATED         SIZE
 tektutor/hello-microservice                     1.0       ec169bcd0658   16 hours ago    410MB
 tektutor.jfrog.io/tektutor-docker/hello-world   1.0.0     d2c94e258dcb   10 months ago   13.3kB
 tektutor.jfrog.io/tektutor-docker/hello-world   latest    d2c94e258dcb   10 months ago   13.3kB
   
-[jegan@tektutor.org spring-ms]$ docker tag tektutor/hello-microservice:1.0 tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+[jegan@tektutor.org spring-ms]$ <b>docker tag tektutor/hello-microservice:1.0 tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0</b>
   
-[jegan@tektutor.org spring-ms]$ docker images
+[jegan@tektutor.org spring-ms]$ <b>docker images</b>
 REPOSITORY                                             TAG       IMAGE ID       CREATED         SIZE
 tektutor/hello-microservice                            1.0       ec169bcd0658   16 hours ago    410MB
 tektutor.jfrog.io/tektutor-docker/hello-microservice   1.0       ec169bcd0658   16 hours ago    410MB
@@ -152,7 +152,7 @@ docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
 
 Expected output
 <pre>
-[jegan@tektutor.org spring-ms]$ docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+[jegan@tektutor.org spring-ms]$ <b>docker push tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0</b>
 The push refers to repository [tektutor.jfrog.io/tektutor-docker/hello-microservice]
 191a955daa2f: Pushed 
 00a9cea1d198: Pushed 
@@ -168,7 +168,7 @@ oc get po
 
 Expected output
 <pre>
-[jegan@tektutor.org spring-ms]$ oc new-app --image=tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+[jegan@tektutor.org spring-ms]$ <b>oc new-app --image=tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0</b>
 W0322 12:09:36.522032 3222928 newapp.go:523] Could not find an image stream match for "tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0". Make sure that a container image with that tag is available on the node for the deployment to succeed.
 --> Found container image ec169bc (16 hours old) from tektutor.jfrog.io for "tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0"
 
@@ -186,7 +186,7 @@ W0322 12:09:36.522032 3222928 newapp.go:523] Could not find an image stream matc
      'oc expose service/hello-microservice' 
     Run 'oc status' to view your app.
   
-[jegan@tektutor.org spring-ms]$ oc get po -w
+[jegan@tektutor.org spring-ms]$ <b>oc get po -w</b>
 NAME                                  READY   STATUS         RESTARTS   AGE
 hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull   0          12s
 hello-microservice-7dd969c847-6gvsg   0/1     ImagePullBackOff   0          17s
@@ -202,7 +202,7 @@ oc get secrets
 
 Expected output
 <pre>
-[jegan@tektutor.org spring-ms]oc get secrets
+[jegan@tektutor.org spring-ms]<b>oc get secrets</b>
 NAME                       TYPE                                  DATA   AGE
 builder-dockercfg-rsp4w    kubernetes.io/dockercfg               1      23m
 builder-token-vz2lv        kubernetes.io/service-account-token   4      23m
@@ -227,10 +227,10 @@ Expected output
 <pre>
 jegan@tektutor.org spring-ms]$ ls
 Dockerfile  hello-microservice-deploy.yml  pom.xml  src
-[jegan@tektutor.org spring-ms]$ oc apply -f hello-microservice-deploy.yml 
+[jegan@tektutor.org spring-ms]$ <b>oc apply -f hello-microservice-deploy.yml</b>
 deployment.apps/hello created
   
-[jegan@tektutor.org spring-ms]$ oc get po -w
+[jegan@tektutor.org spring-ms]$ <b>oc get po -w</b>
 NAME                     READY   STATUS              RESTARTS   AGE
 hello-7b548bfc5f-chzcn   0/1     ContainerCreating   0          3s
 hello-7b548bfc5f-ps872   0/1     ContainerCreating   0          3s
@@ -238,7 +238,7 @@ hello-7b548bfc5f-twlnc   0/1     ContainerCreating   0          3s
 hello-7b548bfc5f-twlnc   1/1     Running             0          27s
 hello-7b548bfc5f-ps872   1/1     Running             0          28s
 
-[jegan@tektutor.org spring-ms]oc get secrets
+[jegan@tektutor.org spring-ms]<b>oc get secrets</b>
 NAME                       TYPE                                  DATA   AGE
 builder-dockercfg-rsp4w    kubernetes.io/dockercfg               1      23m
 builder-token-vz2lv        kubernetes.io/service-account-token   4      23m
