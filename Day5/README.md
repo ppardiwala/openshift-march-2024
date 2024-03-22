@@ -193,6 +193,63 @@ hello-microservice-7dd969c847-6gvsg   0/1     ImagePullBackOff   0          17s
 hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull       0          31s  
 </pre>
 
+In order to download container image from our private JFrog Container Image registry, we need provide login credentials.  These login credentials we can save in a Openshift secret as shown below
+```
+oc create secret docker-registry private-jfrog-image-registry --docker-server=tektutor.jfrog.io --docker-username=<replace-this-with-your-jfrog-user-login> --docker-password=<replace-this-with-your-jfrog-access-token>
+
+oc get secrets
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]oc get secrets
+NAME                       TYPE                                  DATA   AGE
+builder-dockercfg-rsp4w    kubernetes.io/dockercfg               1      23m
+builder-token-vz2lv        kubernetes.io/service-account-token   4      23m
+default-dockercfg-fnztn    kubernetes.io/dockercfg               1      23m
+default-token-g2jbg        kubernetes.io/service-account-token   4      23m
+deployer-dockercfg-8tn5r   kubernetes.io/dockercfg               1      23m
+deployer-token-fkcfz       kubernetes.io/service-account-token   4      23m
+private-jfrog-docker-registry    kubernetes.io/dockerconfigjson        1      8m5s  
+</pre>
+
+Now you may deploy the hello-microservice in declarative style as shown below
+```
+cd ~/openshift-march-2024
+git pull
+cd Day5/spring-ms
+oc apply -f hello-microservice-deploy.yml
+
+oc get po -w
+```
+
+Expected output
+<pre>
+jegan@tektutor.org spring-ms]$ ls
+Dockerfile  hello-microservice-deploy.yml  pom.xml  src
+[jegan@tektutor.org spring-ms]$ oc apply -f hello-microservice-deploy.yml 
+deployment.apps/hello created
+  
+[jegan@tektutor.org spring-ms]$ oc get po -w
+NAME                     READY   STATUS              RESTARTS   AGE
+hello-7b548bfc5f-chzcn   0/1     ContainerCreating   0          3s
+hello-7b548bfc5f-ps872   0/1     ContainerCreating   0          3s
+hello-7b548bfc5f-twlnc   0/1     ContainerCreating   0          3s
+hello-7b548bfc5f-twlnc   1/1     Running             0          27s
+hello-7b548bfc5f-ps872   1/1     Running             0          28s
+
+[jegan@tektutor.org spring-ms]oc get secrets
+NAME                       TYPE                                  DATA   AGE
+builder-dockercfg-rsp4w    kubernetes.io/dockercfg               1      23m
+builder-token-vz2lv        kubernetes.io/service-account-token   4      23m
+default-dockercfg-fnztn    kubernetes.io/dockercfg               1      23m
+default-token-g2jbg        kubernetes.io/service-account-token   4      23m
+deployer-dockercfg-8tn5r   kubernetes.io/dockercfg               1      23m
+deployer-token-fkcfz       kubernetes.io/service-account-token   4      23m
+private-docker-registry    kubernetes.io/dockerconfigjson        1      8m5s  
+</pre>
+
+
 # Knative Serverless applications
 
 ## Info - What is OpenShiftServerless?
