@@ -12,13 +12,9 @@ https://jfrog.com/artifactory/enterprise-getting-started/
 </pre>
 
 Expected output
-<pre>
 ![JFrog](jfrog-1.png)
-</pre>
 Click on "Start Free" button in the top right corner of the web page to get the below page
-<pre>
 ![JFrog](jfrog-3.png)
-</pre>
 Click on Google to get the below page
 ![JFrog](jfrog-2.png)
 
