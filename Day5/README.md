@@ -17,7 +17,9 @@ Click on "Start Free" button in the top right corner of the web page to get the 
 ![JFrog](jfrog-3.png)
 Click on Google to get the below page
 ![JFrog](jfrog-2.png)
-Click on "Cloud Trial"
+Click on "Cloud Trial" and go with aws public cloud
+![JFrog](jfrog-4.png)
+
 
 ## Lab - JFrog Private Docker Registry (Quick Test once you setup your JFrog Private Docker Registry)
 ```
