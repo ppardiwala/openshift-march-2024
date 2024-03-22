@@ -454,3 +454,78 @@ Writing manifest to image destination
 Successfully pushed image-registry.openshift-image-registry.svc:5000/jegan/tektutor-spring-hello@sha256:69cfb72162c69b3adc19a78ae63c793f8db2c7ded33b012b5e8c129d33f1b544
 Push successful  
 </pre>
+
+
+## Lab - Securing our application with edge route (https)
+Upgrading the openssl in CentOS
+https://webhostinggeeks.com/howto/install-update-openssl-centos/
+
+Find your Openshift cluster domain
+```
+oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+```
+Expected similar output
+<pre>
+[jegan@tektutor.org openshift-march-2024]$ oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+apps.ocp4.training.tektutor
+</pre>
+
+
+Installing build tools to compile openssl from source code
+```
+sudo yum groupinstall 'Development Tools'
+sudo yum install perl-IPC-Cmd perl-Test-Simple
+cd /usr/src
+wget https://www.openssl.org/source/openssl-3.0.0.tar.gz
+tar -zxf openssl-3.0.0.tar.gz
+rm openssl-3.0.0.tar.gz
+dnf install perl
+cd /usr/src/openssl-3.0.0
+./config
+make
+make test
+make install
+ln -s /usr/local/lib64/libssl.so.3 /usr/lib64/libssl.so.3
+ln -s /usr/local/lib64/libcrypto.so.3 /usr/lib64/libcrypto.so.3
+openssl version
+```
+
+Let's deploy a microservice and create an edge route as shown below
+```
+openssl genrsa -out key.key
+openssl req -new -key key.key -out csr.csr -subj="/CN=hello-jegan.apps.ocp.tektutor-ocp-labs"
+openssl x509 -req -in csr.csr -signkey key.key -out crt.crt
+oc create route edge --service spring-ms --hostname hello-jegan.apps.ocp4.training.tektutor --key key.key --cert crt.crt
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org edge-route]$ oc get svc
+NAME        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+spring-ms   ClusterIP   172.30.208.33   <none>        8080/TCP   87m
+	
+[jegan@tektutor.org edge-route]$ oc expose deploy/nginx --port=8080
+service/nginx exposed
+
+[jegan@tektutor.org edge-route]$ oc get svc
+NAME        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+nginx       ClusterIP   172.30.16.165   <none>        8080/TCP   4s
+spring-ms   ClusterIP   172.30.208.33   <none>        8080/TCP   87m
+
+[jegan@tektutor.org edge-route]$ oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+apps.ocp4.training.tektutor
+
+[jegan@tektutor.org edge-route]$ oc project
+Using project "jegan-devops" on server "https://api.ocp4.training.tektutor:6443".
+
+[jegan@tektutor.org edge-route]$ openssl req -new -key key.key -out csr.csr -subj="/CN=nginx-jegan-devops.apps.ocp4.training.tektutor"
+
+[jegan@tektutor.org edge-route]$ openssl x509 -req -in csr.csr -signkey key.key -out crt.crt
+
+[jegan@tektutor.org edge-route]$ oc create route edge --service nginx --hostname nginx-jegan-devops.apps.ocp4.training.tektutor --key key.key --cert crt.crt
+route.route.openshift.io/nginx created
+
+[jegan@tektutor.org edge-route]$ oc get route
+NAME    HOST/PORT                                        PATH   SERVICES   PORT    TERMINATION   WILDCARD
+nginx   nginx-jegan-devops.apps.ocp4.training.tektutor          nginx      <all>   edge          None
+</pre>                                                                                                                                 
