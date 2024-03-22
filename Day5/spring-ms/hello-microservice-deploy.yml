@@ -15,7 +15,7 @@ spec:
         app: hello
     spec:
       containers:
-      - image: tektutor.jfrog.io/tektutor-docker/hello-microservice:1.0
+      - image: priteshp.jfrog.io/pritesh-docker/hello-microservice:1.0
         name: hello-microservice
       imagePullSecrets:
       - name: private-jfrog-image-registry 
