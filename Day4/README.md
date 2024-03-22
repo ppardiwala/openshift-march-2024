@@ -1,5 +1,9 @@
 # Day 4
 
+## Reference
+Red Hat Openshift also supports adding Windows Virtual Machines (nodes) into the Openshift cluster
+https://docs.openshift.com/container-platform/4.8/windows_containers/understanding-windows-container-workloads.html#understanding-windows-container-workloads
+
 ## Lab - Creating an NFS Storage Class 
 
 ```
@@ -120,3 +124,283 @@ Finally, let's clean up the pod
 oc delete -f required-affinity.yml
 oc label node worker-2.ocp.tektutor.org.labs disk-
 ```
+
+## Lab - Deploy custom spring-boot application from source code into OpenShift cluster
+```
+https://github.com/tektutor/spring-ms
+```
+
+## Lab - Finding the OpenShift Private Image Registry 
+```
+oc get po --all-namespaces | grep registry
+
+oc get svc -n openshift-image-registry
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc get po --all-namespaces | grep registry
+openshift-image-registry                           cluster-image-registry-operator-7b4979cf68-v7kqv                1/1     Running     0             11h
+openshift-image-registry                           image-pruner-28516320-8t9mt                                     0/1     Completed   0             10h
+openshift-image-registry                           image-registry-75d695567f-ghvfc                                 1/1     Running     0             11h
+openshift-image-registry                           node-ca-6s95s                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-gn9lt                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-gw454                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-jtxp5                                                   1/1     Running     0             11h
+openshift-image-registry                           node-ca-tg4bx                                                   1/1     Running     0             11h
+  
+[jegan@tektutor.org spring-ms]$ oc get svc -n openshift-image-registry
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+image-registry            ClusterIP   172.30.89.109   <none>        5000/TCP    11h
+image-registry-operator   ClusterIP   None            <none>        60000/TCP   11h
+[jegan@tektutor.org spring-ms]$ 
+[jegan@tektutor.org spring-ms]$ oc describe svc/image-registry -n openshift-image-registry
+Name:              image-registry
+Namespace:         openshift-image-registry
+Labels:            docker-registry=default
+Annotations:       imageregistry.operator.openshift.io/checksum: sha256:1c19715a76014ae1d56140d6390a08f14f453c1a59dc36c15718f40c638ef63d
+                   service.alpha.openshift.io/serving-cert-secret-name: image-registry-tls
+                   service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710977180
+                   service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1710977180
+Selector:          docker-registry=default
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                172.30.89.109
+IPs:               172.30.89.109
+Port:              5000-tcp  5000/TCP
+TargetPort:        5000/TCP
+Endpoints:         10.128.0.68:5000
+Session Affinity:  None
+Events:            <none>
+</pre>
+
+## Lab - Deploying an application from CLI using source strategy
+You can use any container image that suits your application from the Red Hat Container Image portal
+https://catalog.redhat.com/software/containers/search
+
+```
+oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/tektutor/spring-ms.git --strategy=source
+```
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/tektutor/spring-ms.git --strategy=source
+--> Found container image a6b53e1 (4 weeks old) from registry.access.redhat.com for "registry.access.redhat.com/ubi8/openjdk-11"
+
+    Java Applications 
+    ----------------- 
+    Platform for building and running plain Java applications (fat-jar and flat classpath)
+
+    Tags: builder, java
+
+    * An image stream tag will be created as "openjdk-11:latest" that will track the source image
+    * A source build using source code from https://github.com/tektutor/spring-ms.git will be created
+      * The resulting image will be pushed to image stream tag "spring-ms:latest"
+      * Every time "openjdk-11:latest" changes a new build will be triggered
+
+--> Creating resources ...
+    imagestream.image.openshift.io "openjdk-11" created
+    imagestream.image.openshift.io "spring-ms" created
+    buildconfig.build.openshift.io "spring-ms" created
+    deployment.apps "spring-ms" created
+    service "spring-ms" created
+--> Success
+    Build scheduled, use 'oc logs -f buildconfig/spring-ms' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/spring-ms' 
+    Run 'oc status' to view your app.  
+</pre>
+
+You may check the logs as shown below
+```
+oc logs -f bc/spring-ms
+```
+
+You need to create a route
+```
+oc get svc
+oc expose svc/spring-ms
+oc get route
+```
+
+Now from the webconsole --> Developer context -> topology you can click on the route link(arrow point upward) to access the route public url to see the web page.
+
+
+## Lab - Deploying an appliction from github using Docker strategy from CLI
+```
+oc new-app https://github.com/tektutor/spring-ms.git --strategy=docker
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app https://github.com/tektutor/spring-ms.git --strategy=docker
+--> Found container image a6b53e1 (4 weeks old) from registry.access.redhat.com for "registry.access.redhat.com/ubi8/openjdk-11"
+
+    Java Applications 
+    ----------------- 
+    Platform for building and running plain Java applications (fat-jar and flat classpath)
+
+    Tags: builder, java
+
+    * An image stream tag will be created as "openjdk-11:latest" that will track the source image
+    * A Docker build using source code from https://github.com/tektutor/spring-ms.git will be created
+      * The resulting image will be pushed to image stream tag "spring-ms:latest"
+      * Every time "openjdk-11:latest" changes a new build will be triggered
+
+--> Creating resources ...
+    imagestream.image.openshift.io "openjdk-11" created
+    imagestream.image.openshift.io "spring-ms" created
+    buildconfig.build.openshift.io "spring-ms" created
+    deployment.apps "spring-ms" created
+    service "spring-ms" created
+--> Success
+    Build scheduled, use 'oc logs -f buildconfig/spring-ms' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/spring-ms' 
+    Run 'oc status' to view your app.  
+</pre>
+
+You can check the application build progress as shown below
+```
+oc logs -f bc/spring-ms
+```
+
+Expected output
+<pre>
+jegan@tektutor.org spring-ms]$ oc logs -f bc/spring-ms
+Cloning "https://github.com/tektutor/spring-ms.git" ...
+	Commit:	82552fb8a8eb3a7cc7e8165b8878dc5e47e50db3 (Renamed deploy.yml to deploy.yaml)
+	Author:	Jeganathan Swaminathan <mail2jegan@gmail.com>
+	Date:	Wed Feb 15 15:11:17 2023 +0530
+Replaced Dockerfile FROM image registry.access.redhat.com/ubi8/openjdk-11
+time="2024-03-21T11:33:49Z" level=info msg="Not using native diff for overlay, this may cause degraded performance for building images: kernel has CONFIG_OVERLAY_FS_REDIRECT_DIR enabled"
+I0321 11:33:49.342803       1 defaults.go:112] Defaulting to storage driver "overlay" with options [mountopt=metacopy=on].
+Caching blobs under "/var/cache/blobs".
+
+Pulling image docker.io/maven:3.6.3-jdk-11 ...
+Trying to pull docker.io/library/maven:3.6.3-jdk-11...
+Getting image source signatures
+Copying blob sha256:6c215442f70bd949a6f2e8092549943905e2d4f9c87a4f532d7740ae8647d33a
+Copying blob sha256:5d6f1e8117dbb1c6a57603cb4f321a861a08105a81bcc6b01b0ec2b78c8523a5
+Copying blob sha256:234b70d0479d7f16d7ee8d04e4ffdacc57d7d14313faf59d332f18b2e9418743
+Copying blob sha256:004f1eed87df3f75f5e2a1a649fa7edd7f713d1300532fd0909bb39cd48437d7
+Copying blob sha256:48c2faf66abec3dce9f54d6722ff592fce6dd4fb58a0d0b72282936c6598a3b3
+Copying blob sha256:d7eb6c022a4e6128219b32a8e07c8c22c89624ff440ebac1506121794bc15ccc
+Copying blob sha256:355e8215390faee903502a9fddfc65cd823f1606f053376ba2575adce66974a1
+Copying blob sha256:cf5eb43522f68d7e2347e19ad70dadcf1594d25b792ede0464c2936ff902c4c6
+Copying blob sha256:4fee0489a65b64056f81358639bfe85fd87776630830fd02ce8c15e34928bf9c
+Copying blob sha256:413646e6fa5d7bcd9722d3e400fc080a77deb505baed79afa5fedae23583af25
+Copying config sha256:e23b595c92ada5c9f20a27d547ed980a445f644eb1cbde7cfb27478fa38c4691
+Writing manifest to image destination
+
+Pulling image registry.access.redhat.com/ubi8/openjdk-11@sha256:45cd320e359633795b9166e397c2b07e186b7fec7f6dacce3c52ecab8cba8023 ...
+Trying to pull registry.access.redhat.com/ubi8/openjdk-11@sha256:45cd320e359633795b9166e397c2b07e186b7fec7f6dacce3c52ecab8cba8023...
+Getting image source signatures
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+Copying config sha256:a6b53e10c7678edc1d2e8090ed0a0b40d147f8e110ac2277931828ef11276f96
+Writing manifest to image destination
+Adding transient rw bind mount for /run/secrets/rhsm
+[1/2] STEP 1/3: FROM docker.io/maven:3.6.3-jdk-11 AS stage1
+[1/2] STEP 2/3: COPY . .
+--> 5ed50734e87f
+[1/2] STEP 3/3: RUN mvn clean package
+[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.4.2/spring-boot-starter-parent-2.4.2.pom
+Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.4.2/spring-boot-starter-parent-2.4.2.pom (8.6 kB at 20 kB/s)
+
+[2/2] STEP 6/6: LABEL "io.openshift.build.commit.author"="Jeganathan Swaminathan <mail2jegan@gmail.com>" "io.openshift.build.commit.date"="Wed Feb 15 15:11:17 2023 +0530" "io.openshift.build.commit.id"="82552fb8a8eb3a7cc7e8165b8878dc5e47e50db3" "io.openshift.build.commit.message"="Renamed deploy.yml to deploy.yaml" "io.openshift.build.commit.ref"="master" "io.openshift.build.name"="spring-ms-1" "io.openshift.build.namespace"="jegan" "io.openshift.build.source-location"="https://github.com/tektutor/spring-ms.git"
+[2/2] COMMIT temp.builder.openshift.io/jegan/spring-ms-1:565d9d19
+--> 5148c0e02824
+Successfully tagged temp.builder.openshift.io/jegan/spring-ms-1:565d9d19
+5148c0e02824b36eb1a1f4ae90898cd7c0f3391babf8330ba2a5cd8682220af7
+
+Pushing image image-registry.openshift-image-registry.svc:5000/jegan/spring-ms:latest ...
+Getting image source signatures
+Copying blob sha256:4328970bb17139aa835c745ad0d72072f5b4721c3da9ca602f772c39453e5bc8
+Copying blob sha256:0bb48edf8994fcf133c612f92171d68f572091fb0b1113715eab5f3e5e7f54e5
+Copying blob sha256:74e0c06e5eac269967e6970582b9b25168177df26dffed37ccde09369302a87a
+Copying config sha256:5148c0e02824b36eb1a1f4ae90898cd7c0f3391babf8330ba2a5cd8682220af7
+Writing manifest to image destination
+Successfully pushed image-registry.openshift-image-registry.svc:5000/jegan/spring-ms@sha256:1c8742b631b1ddaf8ad5508dc5a0855684212e1bc12baf2f711da4cd94d099cd
+Push successful
+</pre>
+
+You need to create a route
+```
+oc get svc
+oc expose svc/spring-ms
+oc get route
+```
+Access the route url from the Webconsole -> Developer context --> Topology
+
+## Lab - Deploying an application from a Custom Docker Image from Docker Hub
+```
+oc new-app --image=tektutor/spring-ms:1.0
+oc get svc
+oc expose svc/spring-ms
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ oc new-app --image=tektutor/spring-ms:1.0
+--> Found container image 9175b94 (19 months old) from Docker Hub for "tektutor/spring-ms:1.0"
+
+    * An image stream tag will be created as "spring-ms:1.0" that will track this image
+
+--> Creating resources ...
+    imagestream.image.openshift.io "spring-ms" created
+    deployment.apps "spring-ms" created
+    service "spring-ms" created
+--> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose service/spring-ms' 
+    Run 'oc status' to view your app.
+	
+[jegan@tektutor.org spring-ms]$ oc get svc
+NAME        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+spring-ms   ClusterIP   172.30.238.230   <none>        8080/TCP   13s
+	
+[jegan@tektutor.org spring-ms]$ oc expose svc/spring-ms
+route.route.openshift.io/spring-ms exposed
+	
+[jegan@tektutor.org spring-ms]$ oc get route
+NAME        HOST/PORT                                    PATH   SERVICES    PORT       TERMINATION   WILDCARD
+spring-ms   spring-ms-jegan.apps.ocp.tektutor.org.labs          spring-ms   8080-tcp                 None
+	
+[jegan@tektutor.org spring-ms]$ curl spring-ms-jegan.apps.ocp.tektutor.org.labs
+Greetings from Spring Boot!	
+</pre>
+
+## Lab - Create an edge route (https based public route url)
+
+Find your base domain of your openshift cluster
+```
+oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+```
+
+Expected output
+<pre>
+[root@tektutor.org auth]# oc get ingresses.config/cluster -o jsonpath={.spec.domain}
+apps.ocp.tektutor.org.labs	
+</pre>
+
+Install the openssl from source code
+```
+sudo yum groupinstall 'Development Tools'
+sudo yum install perl-IPC-Cmd perl-Test-Simple
+cd /usr/src
+wget https://www.openssl.org/source/openssl-3.0.0.tar.gz
+tar -zxf openssl-3.0.0.tar.gz
+rm openssl-3.0.0.tar.gz
+dnf install perl
+cd /usr/src/openssl-3.0.0
+./config
+make
+make test
+make install
+ln -s /usr/local/lib64/libssl.so.3 /usr/lib64/libssl.so.3
+ln -s /usr/local/lib64/libcrypto.so.3 /usr/lib64/libcrypto.so.3
+openssl version
+```
+
