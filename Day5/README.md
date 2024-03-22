@@ -34,3 +34,34 @@ The push refers to repository [tektutor.jfrog.io/tektutor-docker/hello-world]
 ac28800ec8bb: Layer already exists 
 1.0.0: digest: sha256:d37ada95d47ad12224c205a938129df7a3e52345828b4fa27b03a98825d1e2e7 size: 524  
 </pre>
+
+## Lab - Building a Custom Docker Image and pushing to JFrog Private Docker Registry
+```
+
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org spring-ms]$ ls
+Dockerfile  pom.xml  src
+
+[jegan@tektutor.org spring-ms]$ docker build -t tektutor/hello-microservice:1.0 .
+[+] Building 2.0s (11/11) FINISHED                                                               docker:default
+ => [internal] load build definition from Dockerfile                                                       0.0s
+ => => transferring dockerfile: 315B                                                                       0.0s
+ => [internal] load metadata for registry.access.redhat.com/ubi8/openjdk-11:latest                         0.7s
+ => [internal] load metadata for docker.io/library/maven:3.6.3-jdk-11                                      1.9s
+ => [internal] load .dockerignore                                                                          0.0s
+ => => transferring context: 2B                                                                            0.0s
+ => [stage-1 1/2] FROM registry.access.redhat.com/ubi8/openjdk-11:latest@sha256:285b35387bd04f93bb2ad8a2d  0.0s
+ => [internal] load build context                                                                          0.0s
+ => => transferring context: 1.02kB                                                                        0.0s
+ => [stage1 1/3] FROM docker.io/library/maven:3.6.3-jdk-11@sha256:1d29ccf46ef2a5e64f7de3d79a63f9bcffb4dc5  0.0s
+ => CACHED [stage1 2/3] COPY . .                                                                           0.0s
+ => CACHED [stage1 3/3] RUN mvn clean package                                                              0.0s
+ => CACHED [stage-1 2/2] COPY --from=stage1 target/*.jar app.jar                                           0.0s
+ => exporting to image                                                                                     0.0s
+ => => exporting layers                                                                                    0.0s
+ => => writing image sha256:ec169bcd065873433a41201a6141821e8e155dfea95e9c291592fefb2732c2af               0.0s
+ => => naming to docker.io/tektutor/hello-microservice:1.0                                                 0.0s
+</pre>
