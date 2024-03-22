@@ -251,6 +251,9 @@ Whenever we deploy an application within Kubernetes/OpenShift, a Deployment, Rep
 ![Red Hat Openshift Architecture](openshift-architecture.png)
 ![Red Hat Openshift Architecture](openshift-architecture-2.png)
 
+## Info - OpenShift states
+https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/nodes/working-with-clusters#nodes-containers-events-list_nodes-containers-events
+
 ## Info - Pod Lifecycle
 - Pending - Container image gets downloads or there are no Persistent Volume to bound and claim them
 - Running - The Pod is scheduled to a node and all containers in the Pod are up and running
