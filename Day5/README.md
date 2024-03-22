@@ -69,3 +69,46 @@ Dockerfile  pom.xml  src
  => => writing image sha256:ec169bcd065873433a41201a6141821e8e155dfea95e9c291592fefb2732c2af               0.0s
  => => naming to docker.io/tektutor/hello-microservice:1.0                                                 0.0s
 </pre>
+
+
+# Knative Serverless applications
+
+## Info - What is OpenShiftServerless?
+- Based on opensource knative project
+- Deployment model for containers and functions that does resource allocation on demand
+- Developers can focus on application development without needing to worry about infrastructe and deployment logistics
+- Supports evern-driven architecture
+- Can use any programming language or runtime
+- Can run your application anywhere OpenShift runs
+- Manage serverless applications natively within OpenShift
+
+## Lab - Creating a knative service imperatively
+```
+kn service create --image=bitnami/nginx:latest
+```
+
+## Lab - Creating a knative service declaratively
+```
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: frontend
+spec:
+  template:
+    metadata:
+      labels:
+        app: guestbook
+        tier: frontend
+    spec:
+      containers:
+      - image: mgrimald/guestbook
+        resources:
+          requests:
+             cpu: 100m
+             memory: 100Mi
+          env:
+          - name: GET_HOSTS_FROM
+            value: dns
+          ports:
+          - containerPort: 80
+```
