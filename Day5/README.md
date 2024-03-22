@@ -1,5 +1,10 @@
 # Day 5
 
+## References
+
+About Parent Devfile
+https://registry.devfile.io/viewer/devfiles/community/java-springboot?devfile-version=1.2.0
+
 ## Lab - JFrog Private Docker Registry (Quick Test once you setup your JFrog Private Docker Registry)
 ```
 docker login -ujegan@tektutor.org tektutor.jfrog.io
